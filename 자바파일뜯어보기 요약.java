@@ -249,3 +249,42 @@
  * sendForbiddenResponse 메서드는 403 Forbidden 응답을 전송하는 메서드입니다.
  * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
  */
+
+/* SetCharacterEncodingFilter.java 파일 요약
+ * SetCharacterEncodingFilter 클래스는 요청과 응답의 문자 인코딩을 설정하는 필터(Filter) 역할을 합니다.
+ * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
+ * doFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 요청의 문자 인코딩이 설정되지 않은 경우
+ * 또는 무시(ignore) 설정인 경우, selectEncoding 메서드를 호출하여 설정할 문자 인코딩을 선택하고 
+ * 요청의 문자 인코딩을 설정합니다. 그 후, 다음 필터로 체인을 전달합니다.
+ * init 메서드는 필터를 초기화하는 메서드입니다. 
+ * FilterConfig를 사용하여 초기화 파라미터 값을 가져와 필터의 설정을 초기화합니다. 
+ * encoding은 문자 인코딩을, ignore는 무시 설정을 저장합니다.
+ * selectEncoding 메서드는 요청에 대한 문자 인코딩을 선택하는 메서드입니다. 
+ * 기본적으로 필터의 encoding 값을 반환합니다.
+ * SetCharacterEncodingFilter 클래스는 Filter 인터페이스를 구현하여 필터로 사용할 수 있도록 합니다.
+ */
+
+/* BbsAuthorBindingInterceptor.java 파일 요약
+ * BbsAuthorBindingInterceptor 클래스는 게시판 작성자 권한을 바인딩하는 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * siteId, bbsNo, nttNo, atchmnflNo 등의 요청 파라미터와 세션 정보를 기반으로
+ * BbsAuthor 객체를 생성하여 게시판 작성자의 권한을 확인합니다.
+ * getMode 메서드를 사용하여 현재의 BbsMode를 확인하고, 해당 모드에 따라 권한을 확인하고 처리합니다.
+ * 권한이 없는 경우, "권한이 없습니다."라는 메시지를 설정하고 /common/neoAuthMsgBack.do로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다. 
+ * 이 클래스에서는 아무 작업도 수행하지 않습니다.
+ * BbsAuthorBindingInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 
+ * 스프링의 인터셉터로 사용할 수 있도록 합니다.
+  */
+
+/* CmsLoginInterceptor.java 파일 요약
+ * CmsLoginInterceptor 클래스는 CMS 로그인 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
+ * 세션에서 로그인 정보(loginVO)를 가져옵니다.
+ * 사용자 아이디가 없는 경우에는 로그인 페이지로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다. 
+ * 이 클래스에서는 mav에 저장된 모델 맵을 가져와서 현재 요청의 모델 맵에 추가합니다.
+ * CmsLoginInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아
+ * 스프링의 인터셉터로 사용할 수 있도록 합니다.
+ */
