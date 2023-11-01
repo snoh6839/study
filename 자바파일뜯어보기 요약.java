@@ -227,64 +227,178 @@
 /*
  * DSCMSIpBlockFilter. java 파일 요약
  * DSCMSIpBlockFilter 클래스는 IP 차단 기능을 제공하는 필터(Filter) 역할을 합니다.
- * init 메서드는 필터를 초기화하는 메서드입니다. 
+ * init 메서드는 필터를 초기화하는 메서드입니다.
  * filterConfig를 사용하여 리로드 커맨드 파라미터 이름을 초기화하고, IP 차단기를 생성합니다.
- * initializeReloadCommandParamName 메서드는 리로드 커맨드 파라미터 이름을 초기화하는 메서드입니다. 
- * filterConfig에서 NEO_RELOAD_COMMAND 초기화 파라미터 값을 가져옵니다. 
+ * initializeReloadCommandParamName 메서드는 리로드 커맨드 파라미터 이름을 초기화하는 메서드입니다.
+ * filterConfig에서 NEO_RELOAD_COMMAND 초기화 파라미터 값을 가져옵니다.
  * 값이 없는 경우 기본값 "XRC"을 사용합니다.
- * createIpBlocker 메서드는 IP 차단기를 생성하는 메서드입니다. 
+ * createIpBlocker 메서드는 IP 차단기를 생성하는 메서드입니다.
  * IpBlockerFactory를 사용하여 filterConfig를 기반으로 IP 차단기를 생성합니다.
- * filterConfigToMap 메서드는 FilterConfig를 Map으로 변환하는 메서드입니다. 
+ * filterConfigToMap 메서드는 FilterConfig를 Map으로 변환하는 메서드입니다.
  * 초기화 파라미터 이름과 값을 configMap에 저장합니다.
- * doFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 
+ * doFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다.
  * 요청의 원격 주소를 확인하여 IP 차단기가 허용하면
  * processDoFilter 메서드를 호출하여 실제 필터링 작업을 수행하고, 차단하면 403 Forbidden 응답을 전송합니다.
- * processDoFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 
- * 리로드 요청인지 확인하여 리로드 필요한 경우 reloadAndResponse 메서드를 호출하여 리로드를 수행합니다. 
+ * processDoFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다.
+ * 리로드 요청인지 확인하여 리로드 필요한 경우 reloadAndResponse 메서드를 호출하여 리로드를 수행합니다.
  * 그 후, 다음 필터로 체인을 전달합니다.
- * checkReloadRequest 메서드는 리로드 요청인지 확인하는 메서드입니다. 
+ * checkReloadRequest 메서드는 리로드 요청인지 확인하는 메서드입니다.
  * 요청의 리로드 커맨드 파라미터 값을 확인하여 "true"와 대소문자 구분 없이 일치하면 리로드 요청으로 간주합니다.
- * reloadAndResponse 메서드는 리로드를 수행하고 응답을 처리하는 메서드입니다. 
+ * reloadAndResponse 메서드는 리로드를 수행하고 응답을 처리하는 메서드입니다.
  * IP 차단기의 리로드 메서드를 호출하여 IP 목록을 다시 로드합니다.
  * sendForbiddenResponse 메서드는 403 Forbidden 응답을 전송하는 메서드입니다.
  * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
  */
 
-/* SetCharacterEncodingFilter.java 파일 요약
+/*
+ * SetCharacterEncodingFilter.java 파일 요약
  * SetCharacterEncodingFilter 클래스는 요청과 응답의 문자 인코딩을 설정하는 필터(Filter) 역할을 합니다.
  * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
  * doFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 요청의 문자 인코딩이 설정되지 않은 경우
- * 또는 무시(ignore) 설정인 경우, selectEncoding 메서드를 호출하여 설정할 문자 인코딩을 선택하고 
+ * 또는 무시(ignore) 설정인 경우, selectEncoding 메서드를 호출하여 설정할 문자 인코딩을 선택하고
  * 요청의 문자 인코딩을 설정합니다. 그 후, 다음 필터로 체인을 전달합니다.
- * init 메서드는 필터를 초기화하는 메서드입니다. 
- * FilterConfig를 사용하여 초기화 파라미터 값을 가져와 필터의 설정을 초기화합니다. 
+ * init 메서드는 필터를 초기화하는 메서드입니다.
+ * FilterConfig를 사용하여 초기화 파라미터 값을 가져와 필터의 설정을 초기화합니다.
  * encoding은 문자 인코딩을, ignore는 무시 설정을 저장합니다.
- * selectEncoding 메서드는 요청에 대한 문자 인코딩을 선택하는 메서드입니다. 
+ * selectEncoding 메서드는 요청에 대한 문자 인코딩을 선택하는 메서드입니다.
  * 기본적으로 필터의 encoding 값을 반환합니다.
  * SetCharacterEncodingFilter 클래스는 Filter 인터페이스를 구현하여 필터로 사용할 수 있도록 합니다.
  */
 
-/* BbsAuthorBindingInterceptor.java 파일 요약
+/*
+ * BbsAuthorBindingInterceptor.java 파일 요약
  * BbsAuthorBindingInterceptor 클래스는 게시판 작성자 권한을 바인딩하는 인터셉터(Interceptor) 역할을 합니다.
  * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
  * siteId, bbsNo, nttNo, atchmnflNo 등의 요청 파라미터와 세션 정보를 기반으로
  * BbsAuthor 객체를 생성하여 게시판 작성자의 권한을 확인합니다.
  * getMode 메서드를 사용하여 현재의 BbsMode를 확인하고, 해당 모드에 따라 권한을 확인하고 처리합니다.
  * 권한이 없는 경우, "권한이 없습니다."라는 메시지를 설정하고 /common/neoAuthMsgBack.do로 리다이렉트합니다.
- * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다. 
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다.
  * 이 클래스에서는 아무 작업도 수행하지 않습니다.
- * BbsAuthorBindingInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 
+ * BbsAuthorBindingInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아
  * 스프링의 인터셉터로 사용할 수 있도록 합니다.
-  */
+ */
 
-/* CmsLoginInterceptor.java 파일 요약
+/*
+ * CmsLoginInterceptor.java 파일 요약
  * CmsLoginInterceptor 클래스는 CMS 로그인 인터셉터(Interceptor) 역할을 합니다.
  * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
  * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
  * 세션에서 로그인 정보(loginVO)를 가져옵니다.
  * 사용자 아이디가 없는 경우에는 로그인 페이지로 리다이렉트합니다.
- * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다. 
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다.
  * 이 클래스에서는 mav에 저장된 모델 맵을 가져와서 현재 요청의 모델 맵에 추가합니다.
  * CmsLoginInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아
  * 스프링의 인터셉터로 사용할 수 있도록 합니다.
+ */
+
+/*
+ * ControllerInterceptor.java 파일 요약
+ * ControllerInterceptor 인터페이스는 컨트롤러 인터셉터의 기본 동작을 정의하는 메서드들을 선언합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 전처리 작업을 수행합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 후처리 작업을 수행합니다.
+ * afterHandle 메서드는 요청 처리가 완료된 후에 호출되는 메서드로, 추가적인 작업을 수행할 수 있습니다.
+ * getType 메서드는 접근 유형(AccesType)을 반환합니다.
+ * setType 메서드는 접근 유형(AccesType)을 설정합니다.
+ * getCode 메서드는 코드를 반환합니다.
+ * setCode 메서드는 코드를 설정합니다.
+ * getMode 메서드는 게시판 모드(BbsMode)를 반환합니다.
+ * setMode 메서드는 게시판 모드(BbsMode)를 설정합니다.
+ * getReturnType 메서드는 반환 유형(ReturnType)을 반환합니다.
+ * setReturnType 메서드는 반환 유형(ReturnType)을 설정합니다.
+ * ControllerInterceptor 인터페이스는 HandlerInterceptor 인터페이스를 상속받아
+ * 스프링의 컨트롤러 인터셉터로 사용할 수 있도록 합니다.
+ */
+
+/*
+ * ontrollerInterceptorAdaptor.java 파일 요약
+ * ControllerInterceptorAdapter 클래스는 ControllerInterceptor 인터페이스를 구현하는
+ * 어댑터(Adapter) 클래스입니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 기본적으로 false를 반환하여 요청을 처리하지 않음을 나타냅니다. 이 메서드를
+ * 상속받은 클래스에서 필요한 로직을 구현해야 합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * 이 메서드를 상속받은 클래스에서 필요한 후처리 작업을 구현할 수 있습니다.
+ * afterHandle 메서드는 요청 처리 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * 이 메서드를 상속받은 클래스에서 추가적인 작업을 수행할 수 있습니다.
+ * afterCompletion 메서드는 요청 처리가 완료된 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * 이 메서드를 상속받은 클래스에서 추가적인 작업을 수행할 수 있습니다.
+ * getType 메서드는 접근 유형(AccesType)을 반환합니다.
+ * setType 메서드는 접근 유형(AccesType)을 설정합니다.
+ * getCode 메서드는 코드를 반환합니다.
+ * setCode 메서드는 코드를 설정합니다.
+ * getMode 메서드는 게시판 모드(BbsMode)를 반환합니다.
+ * setMode 메서드는 게시판 모드(BbsMode)를 설정합니다.
+ * getReturnType 메서드는 반환 유형(ReturnType)을 반환합니다.
+ * setReturnType 메서드는 반환 유형(ReturnType)을 설정합니다.
+ * ControllerInterceptorAdapter 클래스는 ControllerInterceptor 인터페이스를 구현하고,
+ * 기본적인 메서드들을 빈 구현으로 제공하여 상속받은 클래스에서 필요한 로직을 구현할 수 있도록 합니다.
+ */
+
+/*
+ * DsauthorBindingInterceptor.java 파일 요약
+ * DsAuthorBindingInterceptor 클래스는 DSCMS 작성자 권한을 바인딩하는 인터셉터(Interceptor) 역할을
+ * 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
+ * 세션에서 로그인 정보(loginVO)를 가져옵니다.
+ * 사용자 아이디가 없는 경우에는 로그인 페이지로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 요청에 대한 후처리 작업을 수행합니다.
+ * 이 클래스에서는 mav에 저장된 모델 맵을 가져와서 현재 요청의 모델 맵에 추가합니다.
+ * DsAuthorBindingInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 스프링의 인터셉터로
+ * 사용할 수 있도록 합니다.
+ */
+
+/*
+ * PmsAuthorInterceptor.java 파일 요약
+ * PmsAuthorInterceptor 클래스는 PMS 작성자 권한을 검사하는 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
+ * getType 메서드를 사용하여 접근 유형(AccesType)을 확인하고, 해당 유형에 따라 권한 검사를 수행합니다.
+ * 사용자의 권한(userSe)에 따라 접근을 제한하고, 제한된 경우에는 메시지를 표시하고 이전 페이지로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * PmsAuthorInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 스프링의 인터셉터로 사용할 수
+ * 있도록 합니다.
+ */
+
+/*
+ * PmsLoginInterceptor.java 파일 요약
+ * PmsLoginInterceptor 클래스는 PMS 로그인을 검사하는 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * PmsLoginInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 스프링의 인터셉터로 사용할 수
+ * 있도록 합니다.
+ */
+
+/*
+ * ProgrmAuthorBindingInterceptor.java 파일 요약
+ * ProgrmAuthorBindingInterceptor 클래스는 프로그램 작성자 권한을 바인딩하는 인터셉터(Interceptor) 역할을
+ * 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * isLogined 메서드를 사용하여 로그인 여부를 확인하고, 로그인되지 않은 경우에는 로그인 페이지로 리다이렉트합니다.
+ * getType 메서드를 사용하여 접근 유형(AccesType)을 확인하고, 해당 유형에 따라 권한 검사를 수행합니다.
+ * 요청에서 siteId를 가져와서 비어있는 경우 "www"로 설정합니다.
+ * 로그인되지 않은 경우, 요청된 사이트의 로그인 페이지로 리다이렉트합니다.
+ * 사용자의 권한(userSe)에 따라 접근을 제한하고, 제한된 경우에는 메시지를 표시하고 이전 페이지로 리다이렉트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기본적으로 아무 작업도 수행하지 않습니다.
+ * ProgrmAuthorBindingInterceptor 클래스는 ControllerInterceptorAdapter를 상속받아 스프링의
+ * 인터셉터로 사용할 수 있도록 합니다.
+ */
+
+/* TemplateBindingInterceptor.java 파일 요약
+ * TemplateBindingInterceptor 클래스는 템플릿 바인딩을 위한 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * 요청에서 siteId와 key를 가져옵니다.
+ * kind 변수는 "photo"로 초기화되고, 요청 경로에 "Media" 또는 "media"가 포함되어 있는 경우 "media"로 설정됩니다.
+ * siteService를 사용하여 siteInfo와 menuInfo를 가져옵니다.
+ * siteInfo가 null인 경우 404 오류를 응답으로 전송합니다.
+ * siteInfo의 활성화 여부(actvtyAt)가 "N"인 경우 403 오류를 응답으로 전송합니다.
+ * menuInfo가 null인 경우 404 오류를 응답으로 전송합니다.
+ * siteService를 사용하여 tabMenuList, photoMenuList, mediaMenuList, upperPhotoMenu, upperMediaMenu를 가져옵니다.
+ * fileMngUtil을 사용하여 컨텐츠 파일의 존재 여부를 확인합니다.
+ * siteConectLogHistService와 menuConectLogHistService를 사용하여 사이트 및 메뉴 접속 이력을 업데이트합니다.
+ * copyrightLicenseService를 사용하여 저작권 라이선스 정보를 가져옵니다.
+ * ModelMap을 생성하여 필요한 속성들을 추가합니다.
+ * request의 속성에 mav 모델을 설정합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기존의 mav 모델에 속성들을 추가합니다.
  */
