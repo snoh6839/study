@@ -210,3 +210,42 @@
  * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
  * CrossScriptingFilter 클래스는 Filter 인터페이스를 구현하여 필터로 사용할 수 있도록 합니다.
  */
+
+/*
+ * CrossScriptingFilterRequestWrapper. java 파일 요약
+ * CrossScriptingFilterRequestWrapper 클래스는 HttpServletRequestWrapper를 확장하여
+ * 요청 파라미터의 값을 필터링하여 크로스 스크립팅(Cross-Site Scripting) 공격을 방지하는 역할을 합니다.
+ * getParameterValues 메서드는 파라미터의 값들을 필터링하여 반환합니다.
+ * 각 값에 대해 <, > 문자를 치환하여 필터링합니다.
+ * getParameter 메서드는 단일 파라미터의 값을 필터링하여 반환합니다.
+ * 값에 대해 <, > 문자를 치환하여 필터링합니다.
+ * 필터링된 값을 StringBuffer에 저장하고, 마지막에 StringBuffer의 값을 문자열로 변환하여 반환합니다.
+ * CrossScriptingFilterRequestWrapper 클래스는 HttpServletRequestWrapper를 상속받아
+ * 요청 래퍼 클래스로 사용할 수 있도록 합니다.
+ */
+
+/*
+ * DSCMSIpBlockFilter. java 파일 요약
+ * DSCMSIpBlockFilter 클래스는 IP 차단 기능을 제공하는 필터(Filter) 역할을 합니다.
+ * init 메서드는 필터를 초기화하는 메서드입니다. 
+ * filterConfig를 사용하여 리로드 커맨드 파라미터 이름을 초기화하고, IP 차단기를 생성합니다.
+ * initializeReloadCommandParamName 메서드는 리로드 커맨드 파라미터 이름을 초기화하는 메서드입니다. 
+ * filterConfig에서 NEO_RELOAD_COMMAND 초기화 파라미터 값을 가져옵니다. 
+ * 값이 없는 경우 기본값 "XRC"을 사용합니다.
+ * createIpBlocker 메서드는 IP 차단기를 생성하는 메서드입니다. 
+ * IpBlockerFactory를 사용하여 filterConfig를 기반으로 IP 차단기를 생성합니다.
+ * filterConfigToMap 메서드는 FilterConfig를 Map으로 변환하는 메서드입니다. 
+ * 초기화 파라미터 이름과 값을 configMap에 저장합니다.
+ * doFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 
+ * 요청의 원격 주소를 확인하여 IP 차단기가 허용하면
+ * processDoFilter 메서드를 호출하여 실제 필터링 작업을 수행하고, 차단하면 403 Forbidden 응답을 전송합니다.
+ * processDoFilter 메서드는 실제 필터링 작업을 수행하는 메서드입니다. 
+ * 리로드 요청인지 확인하여 리로드 필요한 경우 reloadAndResponse 메서드를 호출하여 리로드를 수행합니다. 
+ * 그 후, 다음 필터로 체인을 전달합니다.
+ * checkReloadRequest 메서드는 리로드 요청인지 확인하는 메서드입니다. 
+ * 요청의 리로드 커맨드 파라미터 값을 확인하여 "true"와 대소문자 구분 없이 일치하면 리로드 요청으로 간주합니다.
+ * reloadAndResponse 메서드는 리로드를 수행하고 응답을 처리하는 메서드입니다. 
+ * IP 차단기의 리로드 메서드를 호출하여 IP 목록을 다시 로드합니다.
+ * sendForbiddenResponse 메서드는 403 Forbidden 응답을 전송하는 메서드입니다.
+ * destroy 메서드는 필터를 종료하는 메서드입니다. 필요한 정리 작업을 수행합니다.
+ */
