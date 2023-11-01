@@ -125,9 +125,66 @@ URl에 대한 요청을 서버에 전송하게 된다.
 이를 통해 효율적인 리소스 관리가 가능해진다.
 -->
 <!-- 디스패처 서블릿 설정 방법 -->
+<!-- 자바나 web.xml을 통해 등록 및 초기화 되어야 사용 가능하다.
+톰캣 등 서블릿 컨테이너를 통해 디스패처 서블릿의 생명주기를 관리하는 것이 일반적이다. 
+-->
+<!-- 구조 -->
+<!-- Sevlet Container
+서블릿은 스스로 동작하지 않는다. 보통 서블릿을 관리할 서블릿 컨테이너(톰캣 등)를 사용한다.
+서블릿 컨테이너는 싱글톤인 서블릿 객체의 생명주기를 관리한다.
+또한 웹서버와 소켓으로 통신하며, 클라이언트의 요청을 받고 응답을 보내준다.
+멀티 쓰레드 처리도 지원한다. -->
+<!-- WebApplicationContext
+디스패쳐 서블릿은 Servlet WebApplication을 생성하고 보통 Root WebApplicationContext를 생성한다. 
+서블릿 WebApplicationContext안에는 ServletContext와 연관된 Servlet링크들이 있다.
+Controller , ViewResolver, HandlerMapping 등이 이 안에 있다.
+RequestContextUtils의 정적 메소드들을 사용해 어플리케이션이 WebApplication을 조회할 수 있다.
+Root WebApplicationContex 가 있는 경우 infra bean이 이 안에 들어간다.
+Repository, Service 빈 등이 인프라 빈이다.
+WebApplicationContext 설정은 java나 web.xml을 통해 할 수 있다.
+-->
+<!-- 스페셜 빈 (Special Bean) -->
+<!-- 디스패처 서블릿은 요청을 처리하기 위해 위임 컴포넌트에 실제 작업을 맡긴다. 
+이런 위임 컴포넌트를 스페셜 빈(Special Bean)이라고도 부른다.
+스페셜 빈은 프레임워크 계약을 구현하는 스프링 관리 객체 인스턴스를 의미한다.
+쉽게 말하면 스프링에서 제공하는 주요 빈들이다.
+스페셜 빈 들마다 제공되는 일반적인 설정들이 있지만 사용자가 임의로 재정의하거나 교체가 가능하다.
+-->
+<!-- 스페셜 빈 종류
+handlerMapping: 요청을 처리할 컨트롤러를 찾는다.
+handlerAdapter: 요청을 컨트롤러로 전달한다.
+handlerExceptionResolver: 요청에 대한 예외 발생 (핸들러 매핑 도중, 컨트롤러 실행도중)시 처리해 준다.
+viewResolver: 리턴값에 대한 뷰 컴포넌트를 반환한다. 
+string으로 뷰 이름을 전달받았을 때  이를 modelAndView등의 객체로 반환한다.
+LocaleResolver: Locle을 결정한다.
+-> Locale: 유저의 언어, 지역, 출력형식 등을 정의하는 문자열
+MultipartResolver: 멀티파트 파일 업로드를 처리해준다.
+-> Multipart: HTTP응답의 바디를 여러 파트로 나눠서 보내줄 때의 파일 형식을 의미한다.
+-->
+<!-- 작동방식 -->
+<!-- 클라이언트 요청을 디스패처 서블릿이 받는다. 이때 filter를 경유할 수 있다.
+요청 정보를 보고 Servlet WebApplicationContext안에서 HandlerMapping을 통해 요청을 위임할 컨트롤러를 검색해 찾는다.
+찾은 컨트롤러로 요청을 위임할 HandlerAdapter를 찾는다. 이때 Interceptor preHandle이 실행된다.
+HandlerAdapter가 컨트롤러로 요청(HttpRequest)을 위임한다.
+Argument Resolver가 파라미터를 처리해 컨트롤러로 보낸다.
+컨트롤러는 Root WebApplicationContext 속 Service, Repository 등을 호출해가며 비즈니스 로직을 처리한다.
+컨트롤러 매소드에서 최종적인 반환값(Response Entity)이 리턴된다.
+리턴값에 대해 Interceptor postHandle이 실행된다.
+핸들러 어댑터 리턴값을 viewResolver에 전달한다.
+viewResolver가 View를 검색하고 찾은 View에 응답을 전달한다.
+이후 Interceptor afterCompletion이 실행된다.
+디스패처 서블릿에서 View로부터 받은 응답을 클라이언트로 반환해준다. -->
 
 <!-- html 4 / html 5 -->
+<!-- html 5로 넘어오면서 문법이 명확하고 간략해 졌다.
+멀티미디어 요소 video 및에 audio 추가. html 4 까지 Sliverlight, flash등의 지원이 필요했었다.
+사용자 위치 식별 액세스 추가. GeoLocation을 이용하여 보다 간단하게 사용자 위치 액세스 가능
+Client 측면의 저장소(WebStorage) html4에서는 browser cache를 이용하여 데이터를 저장했다.
+html 5에서는 javascript 인터페이스를 통해 web sql 데이터베이스 응용프로그램 사용이 가능하다.
+Client, Server에 WebSocket 통신 추가. html4에서 웹 소켓이 없어, streaming, polling을 통해 데이터 교환을 했다.
+html4, javascript가 동일한 thread에서 실행되던 것을 html 5 부터 브라우저 인터페이스를 별도로 실행시킬 수 있다. -->
 
 <!-- smart editor 2. last -->
+<!-- 네이버에서 제공하는 웹상 게시판 글 편집기 -->
 
 <!-- dscms / cms -->
