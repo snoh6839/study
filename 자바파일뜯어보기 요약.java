@@ -564,5 +564,91 @@
 
 /*
  * RepositoryUtil.java 파일 요약
+ * RepositoryUtil 클래스는 저장소 관련 기능을 제공합니다.
+ * 이 클래스는 Spring Framework의 @Component 어노테이션을 이용해 Bean으로 등록되어 있습니다.
+ * setRepository 메서드는 사이트 ID와 요청 정보를 설정하는 기능을 합니다.
+ * getDir, getRootDir 등의 메서드들은 특정 키에 대한 디렉토리 경로를 반환하는 기능을 담당합니다.
+ * createDir, createRootDir 등의 메서드들은 특정 디렉토리를 생성하는 기능을 담당합니다.
+ * 이때 FileMngUtil 클래스의 mkdir 메서드를 사용합니다.
+ * getFileName, getSiteInfoFilePath 등의 메서드들은 특정 키에 대한 파일 이름 또는 파일 경로를 반환하는 기능을
+ * 담당합니다.
+ */
+
+/*
+ * TemplateUtile.java 파일 요약
+ * TemplateUtil 클래스는 템플릿 관련 기능을 제공합니다.
+ * 이 클래스는 Spring Framework의 @Component 어노테이션을 이용해 Bean으로 등록되어 있습니다.
+ * setTemplate 메서드는 템플릿 ID와 요청 정보를 설정하는 기능을 합니다.
+ * getDir, getRootDir 등의 메서드들은 특정 키에 대한 디렉토리 경로를 반환하는 기능을 담당합니다.
+ * createDir, createRootDir 등의 메서드들은 특정 디렉토리를 생성하는 기능을 담당합니다.
+ * 이때 FileMngUtil 클래스의 mkdir 메서드를 사용합니다.
+ * getFileName, getSiteInfoFilePath 등의 메서드들은 특정 키에 대한 파일 이름 또는 파일 경로를 반환하는 기능을
+ * 담당합니다.
+ */
+
+/*
+ * AccesType.java 파일 요약
+ * 이 Java 클래스는 AccessType이라는 열거형(Enum) 클래스입니다.
+ * 열거형은 몇 개의 상수 값으로 구성된 특별한 클래스로,
+ * 특정 변수가 사전에 정의된 몇 가지 상수 중 하나의 값만 가져야 할 때 사용됩니다.
+ * 해당 AccessType 열거형은 다음 5개의 상수 값을 가지고 있습니다.
+ * REJECT , PASS , SITE , BBS , JUDGE , STAFF
+ */
+
+// BbsMode, ReturnTye 파일도 열거형 클래스이기 때문에 생략
+
+/*
+ * Interceptor.java 파일 요약
  * 
+ * @Target({ ElementType.TYPE, ElementType.METHOD }):
+ * 이 어노테이션은 클래스 또는 메서드에 적용할 수 있음을 나타냅니다.
+ * 
+ * @Retention(RetentionPolicy.RUNTIME):
+ * 이 어노테이션의 정보는 런타임시에도 유지됩니다.
+ * 따라서 런타임시에 리플렉션을 통해 이 어노테이션의 정보를 읽을 수 있습니다.
+ * 
+ * @Documented: 이 어노테이션은 javadoc에 포함됩니다.
+ * 이는 이 어노테이션에 대한 정보가 javadoc 도구에 의해 문서화되어야 함을 나타냅니다.
+ * String[] value(): 이 어노테이션의 요소로, String 배열 타입의 값을 가집니다.
+ * AccesType[] type() default { AccesType.PASS }:
+ * 이 어노테이션의 요소로, AccesType 배열 타입의 값을 가집니다. 기본값은 AccesType.PASS입니다.
+ * String[] code() default { "DEFAULT" }: 이 어노테이션의 요소로, String 배열 타입의 값을 가집니다.
+ * 기본값은 "DEFAULT"입니다.
+ * BbsMode[] mode() default { BbsMode.LIST }: 이 어노테이션의 요소로,
+ * BbsMode 배열 타입의 값을 가집니다. 기본값은 BbsMode.LIST입니다.
+ * ReturnType[] returnType() default { ReturnType.MESSAGE_BACK }: 이 어노테이션의 요소로,
+ * ReturnType 배열 타입의 값을 가집니다. 기본값은 ReturnType.MESSAGE_BACK입니다.
+ */
+
+/*
+ * Clientinfo.java 파일 요약
+ * Client 객체는 ua_parser 라이브러리에서 제공하는 클래스로,
+ * 사용자의 브라우저, 운영체제, 디바이스 정보를 담고 있습니다.
+ * getBrwsr(Client client) 메서드는 Client 객체를 인자로 받아
+ * 사용자의 브라우저 정보를 String 형태로 반환합니다.
+ * getBrwsrVer(Client client) 메서드는 Client 객체를 인자로 받아
+ * 사용자의 브라우저 버전 정보를 String 형태로 반환합니다.
+ * getOs(Client client) 메서드는 Client 객체를 인자로 받아
+ * 사용자의 운영체제 정보를 String 형태로 반환합니다.
+ * getOsVer(Client client) 메서드는 Client 객체를 인자로 받아
+ * 사용자의 운영체제 버전 정보를 String 형태로 반환합니다.
+ * getDevice(Client client) 메서드는 Client 객체를 인자로 받아
+ * 사용자의 디바이스 정보를 String 형태로 반환합니다.
+ */
+
+/*
+ * CookieUtil.java 파일 요약
+ * getCookie(HttpServletRequest request, String cookieName) 메서드는 요청에서 특정 쿠키 이름의 값을 가져옵니다. 
+ * 쿠키가 없으면 빈 문자열을 반환합니다.
+ * getCookieString(HttpServletRequest request) 메서드는 요청에서 모든 쿠키의 문자열을 가져옵니다. 
+ * 쿠키가 없으면 빈 문자열을 반환합니다.
+ * addCookie(HttpServletResponse response, String cookieName, String cookieValue) 메서드는 새 쿠키를 추가합니다. 
+ * 쿠키 이름과 값이 모두 null이 아닌 경우에만 쿠키를 추가합니다.
+ * setCookie(HttpServletResponse response, String name, String value, int iMinute) 메서드는 쿠키를 설정합니다. 
+ * 쿠키의 유효시간도 설정할 수 있습니다.
+ * setCookie(HttpServletResponse response, String name, String value) 메서드는 쿠키를 설정합니다. 
+ * 쿠키의 유효시간은 설정하지 않습니다.
+ * setWebMailCookie(HttpServletResponse response, String name, String value) 메서드는 웹 메일 쿠키를 설정합니다.
+ * setSSOCookie(HttpServletResponse response, String name, String value, String domain, String path, String encoding)
+ *  메서드는 SSO(Single Sign-On) 쿠키를 설정합니다.
  */
