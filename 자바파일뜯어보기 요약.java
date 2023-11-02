@@ -515,11 +515,41 @@
  * FileMngUtil.java 파일 요약
  * getStandardPath, getNewFileName, getFileExt 메서드들은 파일 경로를 표준화하거나 새 파일 이름을
  * 생성하거나 파일 확장자를 가져오는 등의 문자열 처리 기능을 제공합니다.
- * parseFileInf, parseFileInfMulti 메서드들은 MultipartFile 객체의 정보를 파싱하여 FileVO 객체를 생성하고 반환합니다.
+ * parseFileInf, parseFileInfMulti 메서드들은 MultipartFile 객체의 정보를 파싱하여 FileVO 객체를
+ * 생성하고 반환합니다.
  * writeFile, mkdir, isExistsFile, getFileSize, isDirectory, realPath, copyFile,
  * getFileContents, saveFile, deleteFile 메서드들은 파일을 쓰거나 디렉토리를 생성하거나 파일이 존재하는지
  * 확인하거나 파일 크기를 가져오거나 디렉토리인지 확인하거나 실제 경로를 가져오거나 파일을 복사하거나 파일 내용을 가져오거나 파일을 저장하거나
  * 파일을 삭제하는 등의 파일 및 디렉토리 관련 기능을 제공합니다.
  */
 
- /* FileVO.java 파일 요약 */
+/*
+ * FileVO.java 파일 요약
+ * FileVO 클래스는 파일에 대한 정보를 저장하고 반환하기 위해 getter와 setter 메서드를 제공합니다.
+ * 이 클래스에는 원본 파일명, 파일 크기, 저장된 파일명, 파일 저장 경로, 파일 확장자, 파일 순서, 파일 크기
+ * 등의 정보를 저장하는 필드가 있습니다.
+ * toString 메서드는 FileVO 객체의 필드 값들을 문자열로 변환하여 반환합니다. 이 메서드는 주로 디버깅이나 로깅에 사용됩니다
+ */
+
+/*
+ * GlobalsProperties.java 파일 요약
+ * GlobalsProperties 클래스는 전역 설정 정보를 관리합니다.
+ * 이 클래스는 Spring Framework의 @Component 어노테이션을 이용해 Bean으로 등록되어 있으며, @
+ * Autowired 어노테이션을 통해 Properties 타입의 Bean을 자동 주입받습니다.
+ * getSystemMode 메서드는 "Globals.system.mode"라는 키에 해당하는 프로퍼티 값을 가져옵니다.
+ * 이 값은 시스템의 동작 모드를 나타내는 설정값일 가능성이 있습니다.
+ * getProperty 메서드는 특정 키에 해당하는 프로퍼티 값을 가져옵니다.
+ * 이 메서드를 통해 다양한 설정값을 동적으로 조회할 수 있습니다.
+ */
+
+/*
+ * PageHist.java 파일 요약
+ * PageHist 클래스는 페이지 이력에 대한 정보를 저장하고 반환하기 위해 getter와 setter 메서드를 제공합니다.
+ * 이 클래스에는 메뉴 번호(menuNo), 메뉴 이름(menuNm), URL(url) 등의 정보를 저장하는 필드가 있습니다.
+ * toString 메서드는 PageHist 객체의 필드 값들을 문자열로 변환하여 반환합니다.
+ * 이 메서드는 주로 디버깅이나 로깅에 사용됩니다.
+ */
+
+ /*  PageHistService.java 파일 요약
+  * 
+  */
