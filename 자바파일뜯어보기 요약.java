@@ -638,17 +638,36 @@
 
 /*
  * CookieUtil.java 파일 요약
- * getCookie(HttpServletRequest request, String cookieName) 메서드는 요청에서 특정 쿠키 이름의 값을 가져옵니다. 
+ * getCookie(HttpServletRequest request, String cookieName) 메서드는 요청에서 특정 쿠키 이름의
+ * 값을 가져옵니다.
  * 쿠키가 없으면 빈 문자열을 반환합니다.
- * getCookieString(HttpServletRequest request) 메서드는 요청에서 모든 쿠키의 문자열을 가져옵니다. 
+ * getCookieString(HttpServletRequest request) 메서드는 요청에서 모든 쿠키의 문자열을 가져옵니다.
  * 쿠키가 없으면 빈 문자열을 반환합니다.
- * addCookie(HttpServletResponse response, String cookieName, String cookieValue) 메서드는 새 쿠키를 추가합니다. 
+ * addCookie(HttpServletResponse response, String cookieName, String
+ * cookieValue) 메서드는 새 쿠키를 추가합니다.
  * 쿠키 이름과 값이 모두 null이 아닌 경우에만 쿠키를 추가합니다.
- * setCookie(HttpServletResponse response, String name, String value, int iMinute) 메서드는 쿠키를 설정합니다. 
+ * setCookie(HttpServletResponse response, String name, String value, int
+ * iMinute) 메서드는 쿠키를 설정합니다.
  * 쿠키의 유효시간도 설정할 수 있습니다.
- * setCookie(HttpServletResponse response, String name, String value) 메서드는 쿠키를 설정합니다. 
+ * setCookie(HttpServletResponse response, String name, String value) 메서드는 쿠키를
+ * 설정합니다.
  * 쿠키의 유효시간은 설정하지 않습니다.
- * setWebMailCookie(HttpServletResponse response, String name, String value) 메서드는 웹 메일 쿠키를 설정합니다.
- * setSSOCookie(HttpServletResponse response, String name, String value, String domain, String path, String encoding)
- *  메서드는 SSO(Single Sign-On) 쿠키를 설정합니다.
+ * setWebMailCookie(HttpServletResponse response, String name, String value)
+ * 메서드는 웹 메일 쿠키를 설정합니다.
+ * setSSOCookie(HttpServletResponse response, String name, String value, String
+ * domain, String path, String encoding)
+ * 메서드는 SSO(Single Sign-On) 쿠키를 설정합니다.
+ */
+
+/*
+ * DateUtil.java 파일 요약
+ * 날짜, 시간, 요일 관련 파일
+ */
+
+/* DBTrns.java 파일 요약
+ * 이 클래스는 주로 데이터 마이그레이션이나 데이터 트랜스퍼 등의 작업에 사용될 수 있습니다. 
+ * 또한, SFTP를 활용한 파일 전송 기능도 제공하며, 
+ * 이는 웹 애플리케이션에서 사용자가 업로드한 파일을 안전하게 전송하는 데 사용될 수 있습니다. 
+ * 마지막으로 이 클래스는 스프링 프레임워크의 @Controller 어노테이션을 사용하여, 
+ * 웹 요청 처리를 담당하는 컨트롤러로 사용될 수 있습니다.
  */
