@@ -489,3 +489,35 @@ SSO 자체가 단일 실패 지점(SPoF)이 된다
 <!-- FTP의 보안 문제점을 방지하기 위해 나온것. 
 일반적인 FTP와 달리 PC와 서버간의 테이터 전송을 암호화 하기 때문에 해킹이나 보안상의 문제점을 방지,
 안전한 호스팅 서버를 이용할 수 있습니다. -->
+
+<!-- JAVA 이미지 회전 -->
+<!-- BufferedImage 및 Graphics2D.rotate()사용 -->
+<!-- BufferedImage 객체를 매개변수로 수신하고
+회전된 BufferedImage 객체를 반환하는 함수 rotateImage()를 만듭니다.
+rotateImage()에서 getWidth(), getHeight() 및 getType() 메서드를 사용하여
+이미지의 너비, 높이 및 유형을 가져옵니다. 
+BufferedImage() 생성자를 호출하고 세 변수를 인수로 전달하면  BufferedImage 객체 newImageFromBuffer를 반환합니다.
+Graphics2D 객체 graphics2D를 반환하는 createGraphics() 메서드를 사용하여 회전된 새 이미지를 만듭니다. 
+이 객체를 사용하여 세 개의 인수를 취하는 rotate() 함수를 호출합니다. 
+첫 번째는 Math.radians(90)를 전달하여 이미지를 90도 회전할 때 이미지를 회전하는 각도이고, 
+두 번째 및 세 번째 인수는 x 및 y 좌표입니다.
+마지막으로 graphics2D.drawImage()를 호출하여 네 개의 인수인 BufferedImage 객체, 적용할 필터, x 및 y 좌표를 사용하는 회전된 이미지를 그립니다. 
+그런 다음 newImageFromBuffer 객체를 반환합니다.
+main 함수에서 File을 사용하여 파일을 읽은 다음 ImageIO.read()를 사용하여 BufferedImage 객체로 변환합니다. 
+rotateImage() 함수를 호출하고 반환된 BufferedImage 객체를 전달하고 회전된 BufferedImage 객체를 저장합니다. \
+BufferedImage 객체를 사용하는 File 및 ImageIO.write()를 사용하여 저장할 새 파일을 생성해야 합니다. 
+확장자는 빈 파일의 위치입니다.-->
+<!-- Affin 변환 사용 -->
+<!-- rotateImage() 함수에서 new File()을 사용하여 이미지를 읽고 ImageIO.read()를 사용하여 BufferedImage 객체로 변환합니다. 
+그런 다음 원본 이미지의 속성을 유지하는 또 다른 BufferedImage 개체를 만들고 출력이라고 합니다. 
+다음으로 rotateImageClockWise() 메소드를 호출하고 AffineTransorm 클래스의 객체를 반환하는 원래 BufferedImage를 전달합니다.
+rotateImageClockWise()는 이미지를 수신하고 높이와 너비를 가져옵니다. 
+우리는 AffineTransform 객체 affineTransform을 만들고 그것을 사용하여 rotate() 메소드를 호출합니다. 
+‘rotate()‘에서 세 개의 인수를 전달합니다. 
+첫 번째는 라디안으로 측정된 회전 각도입니다. 
+여기에서 ‘Math.PI / 2’를 전달합니다. 마지막 두 인수는 이미지 너비와 높이의 절반인 x 및 y 좌표입니다.
+이제 이미지가 회전할 때 두 개의 인수를 사용하는 translate() 함수를 사용하여 새 좌표에서 이미지를 변환합니다.
+x 방향으로 회전할 거리와 y 방향으로 회전할 거리입니다.
+(imageWidth - imageHeight) / 2를 사용하여 x 및 y 인수를 계산합니다.
+이미지를 시계 반대 방향으로 회전하려면 rotateImageClockWise()
+대신 rotate()에서 rotateImageCounterClockwise() 메서드를 호출할 수 있습니다. -->
