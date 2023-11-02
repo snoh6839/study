@@ -550,6 +550,19 @@
  * 이 메서드는 주로 디버깅이나 로깅에 사용됩니다.
  */
 
- /*  PageHistService.java 파일 요약
-  * 
-  */
+/*
+ * PageHistService.java 파일 요약
+ * addPageHist 메서드는 페이지 이력을 추가하는 기능을 정의합니다. 이 메서드는 요청 정보를 담고 있는
+ * HttpServletRequest 객체와 메뉴 정보를 담고 있는 MenuInfo 객체를 매개변수로 받아서,
+ * 처리 결과를 PageHist 객체의 리스트로 반환합니다.
+ * 메서드 실행 중에 문제가 발생하면 Exception을 던집니다.
+ * getPageHist 메서드는 특정 요청에 대한 페이지 이력 정보를 가져오는 기능을 정의합니다.
+ * 이 메서드는 요청 정보를 담고 있는 HttpServletRequest 객체를 매개변수로 받아서,
+ * 해당 요청에 대한 페이지 이력 정보를 PageHist 객체의 리스트로 반환합니다.
+ * 메서드 실행 중에 문제가 발생하면 Exception을 던집니다.
+ */
+
+/*
+ * RepositoryUtil.java 파일 요약
+ * 
+ */
