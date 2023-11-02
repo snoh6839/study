@@ -385,20 +385,141 @@
  * 인터셉터로 사용할 수 있도록 합니다.
  */
 
-/* TemplateBindingInterceptor.java 파일 요약
+/*
+ * TemplateBindingInterceptor.java 파일 요약
  * TemplateBindingInterceptor 클래스는 템플릿 바인딩을 위한 인터셉터(Interceptor) 역할을 합니다.
  * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
  * 요청에서 siteId와 key를 가져옵니다.
- * kind 변수는 "photo"로 초기화되고, 요청 경로에 "Media" 또는 "media"가 포함되어 있는 경우 "media"로 설정됩니다.
+ * kind 변수는 "photo"로 초기화되고, 요청 경로에 "Media" 또는 "media"가 포함되어 있는 경우 "media"로
+ * 설정됩니다.
  * siteService를 사용하여 siteInfo와 menuInfo를 가져옵니다.
  * siteInfo가 null인 경우 404 오류를 응답으로 전송합니다.
  * siteInfo의 활성화 여부(actvtyAt)가 "N"인 경우 403 오류를 응답으로 전송합니다.
  * menuInfo가 null인 경우 404 오류를 응답으로 전송합니다.
- * siteService를 사용하여 tabMenuList, photoMenuList, mediaMenuList, upperPhotoMenu, upperMediaMenu를 가져옵니다.
+ * siteService를 사용하여 tabMenuList, photoMenuList, mediaMenuList, upperPhotoMenu,
+ * upperMediaMenu를 가져옵니다.
  * fileMngUtil을 사용하여 컨텐츠 파일의 존재 여부를 확인합니다.
- * siteConectLogHistService와 menuConectLogHistService를 사용하여 사이트 및 메뉴 접속 이력을 업데이트합니다.
+ * siteConectLogHistService와 menuConectLogHistService를 사용하여 사이트 및 메뉴 접속 이력을
+ * 업데이트합니다.
  * copyrightLicenseService를 사용하여 저작권 라이선스 정보를 가져옵니다.
  * ModelMap을 생성하여 필요한 속성들을 추가합니다.
  * request의 속성에 mav 모델을 설정합니다.
  * postHandle 메서드는 요청 후에 호출되는 메서드로, 기존의 mav 모델에 속성들을 추가합니다.
  */
+
+/*
+ * TemplateMainBindingInterceptor.java 파일 요약
+ * TemplateMainBindingInterceptor 클래스는 메인 템플릿 바인딩을 위한 인터셉터(Interceptor) 역할을 합니다.
+ * preHandle 메서드는 요청 전에 호출되는 메서드로, 요청에 대한 전처리 작업을 수행합니다.
+ * 요청 URI에서 사이트 ID를 추출합니다.
+ * siteService를 사용하여 siteInfo를 가져옵니다.
+ * siteInfo가 null인 경우 404 오류를 응답으로 전송합니다.
+ * siteInfo의 활성화 여부(actvtyAt)가 "N"인 경우 403 오류를 응답으로 전송합니다.
+ * copyrightLicenseService를 사용하여 저작권 라이선스 정보를 가져옵니다.
+ * ModelMap을 생성하여 필요한 속성들을 추가합니다.
+ * request의 속성에 mav 모델을 설정합니다.
+ * siteConectLogHistService를 사용하여 사이트 접속 이력을 업데이트합니다.
+ * postHandle 메서드는 요청 후에 호출되는 메서드로, 기존의 mav 모델에 속성들을 추가합니다.
+ */
+
+/*
+ * CmmUseSeviceImpl.java 파일 요약
+ * CmmUseServiceImpl 클래스는 공통 사용 서비스를 구현하는 역할을 합니다.
+ * selectCmmnDetailCodeMap 메서드는 공통 상세 코드를 코드 ID를 기준으로 조회하여 맵 형태로 반환합니다.
+ * selectCmmnDetailCodeListToMap 메서드는 공통 상세 코드 리스트를 맵으로 변환하여 반환합니다.
+ * redirectMsg 메서드는 리다이렉트 메시지를 처리하기 위한 모델과 메시지,
+ * URL을 받아서 리다이렉트 메시지 화면의 뷰 이름을 반환합니다.
+ * backMsg 메서드는 이전으로 돌아가는 메시지를 처리하기 위한 모델과 메시지를 받아서
+ * 이전으로 돌아가는 메시지 화면의 뷰 이름을 반환합니다.
+ * removeCmmnDetailCodeList 메서드는 공통 상세 코드 리스트에서 특정 항목을 제거한 결과를 반환합니다.
+ * popupRedirectMsg 메서드는 팝업 리다이렉트 메시지를 처리하기 위한 모델과 메시지,
+ * URL을 받아서 팝업 리다이렉트 메시지 화면의 뷰 이름을 반환합니다.
+ * popupCloseMsg 메서드는 팝업을 닫는 메시지를 처리하기 위한 모델과 메시지를 받아서
+ * 팝업을 닫는 메시지 화면의 뷰 이름을 반환합니다.
+ * redirect 메서드는 리다이렉트를 처리하기 위한 모델과 URL을 받아서 리다이렉트 화면의 뷰 이름을 반환합니다.
+ * responseMsg 메서드는 응답 메시지를 처리하기 위해 문자열 형태의 메시지를 받아서 HTML 형식의 응답을 생성합니다.
+ * popupOpenerRefresh 메서드는 팝업 오프너를 새로고침하는 메시지를 처리하기 위한 모델과 메시지를 받아서
+ * 팝업 오프너를 새로고침하는 메시지 화면의 뷰 이름을 반환합니다.
+ */
+
+/*
+ * PageHistServiceImpl.java 파일 요약
+ * PageHistServiceImpl 클래스는 페이지를 관리하는 서비스를 구현하는 역할을 합니다.
+ * addPageHist 메서드는 페이지 새로운 페이지를 추가하는 기능을 구현합니다.
+ * 기존의 페이지를 가져온 후, 새로운 페이지를 추가한 새로운 페이지 리스트를 생성합니다.
+ * 새로운 페이지를 생성하여 리스트에 추가합니다.
+ * 이전 페이지 리스트에서 현재 페이지와 동일한 메뉴 번호를 가진 페이지를 제외한 항목을
+ * 새로운 페이지 리스트에 추가합니다.
+ * 세션에 새로운 페이지 리스트를 저장합니다.
+ * getPageHist 메서드는 세션에서 페이지 리스트를 가져옵니다.
+ * 페이지 리스트가 없는 경우 빈 리스트를 생성하여 반환합니다.
+ */
+
+/*
+ * AttachmentFileUtil.java 파일 요약
+ * AttachmentFileUtil 클래스는 첨부 파일 관리를 위한 유틸리티 클래스입니다.
+ * setAttachMentFileUtil 메서드는 HttpServletRequest 객체를 설정합니다.
+ * getDir 메서드는 주어진 키에 해당하는 디렉토리 경로를 가져옵니다.
+ * getRootDir, getBannerDir, getPopupDir, getContestDir, getContestPhotoDir
+ * 메서드들은 각각의 디렉토리 경로를 가져옵니다.
+ * createDir 메서드는 주어진 디렉토리 경로에 디렉토리를 생성합니다.
+ * createRootDir, createBannerDir, createPopupDir, createContestDir,
+ * createContestPhotoDir
+ * 메서드들은 각각의 디렉토리를 생성합니다.
+ * reateAttachmentFileDir 메서드는 HttpServletRequest 객체를 설정하고,
+ * 모든 디렉토리를 생성하는 작업을 수행합니다.
+ */
+
+/*
+ * CmmModel.java 파일 요약
+ * CmmModel 클래스는 Serializable 인터페이스를 구현하므로 이 클래스의 인스턴스는 직렬화가 가능합니다.
+ * getFrstRegisterPnttm, getFrstRegisterPnttmYMD, getFrstRegisterPnttmYMDHMS
+ * 메서드들은 최초 등록 시간을 다양한 형식으로 반환합니다.
+ * setFrstRegisterPnttm, setFrstRegisterId, setLastUpdusrPnttm, setLastUpdusrId
+ * 메서드들은 각각의 필드값을 설정합니다.
+ * getFrstRegisterId, getLastUpdusrPnttm, getLastUpdusrId 메서드들은 각각의 필드값을 반환합니다.
+ * toString 메서드는 객체의 정보를 문자열로 변환하여 반환합니다.
+ * 이 메서드는 Apache Commons Lang 라이브러리의 ToStringBuilder 클래스를 사용하여 객체의 정보를 문자열로
+ * 변환합니다.
+ */
+
+/*
+ * CmmPagingModel.java 파일 요약
+ * CmmPagingModel 클래스는 CmmModel 클래스를 상속받아서 페이징 처리를 위한 모델을 표현합니다.
+ * getSearchCnd, getSearchKrwd, getPageIndex, getPageUnit, getPageSize,
+ * getFirstIndex, getLastIndex, getRecordCountPerPage
+ * 메서드들은 각각의 필드값을 반환합니다.
+ * setSearchCnd, setSearchKrwd, setPageIndex, setPageUnit, setPageSize,
+ * setFirstIndex, setLastIndex, setRecordCountPerPage
+ * 메서드들은 각각의 필드값을 설정합니다.
+ * getNeoPaginationInfo 메서드는 총 레코드 수를 입력으로 받아서
+ * NeoPaginationInfo 객체를 생성하고, 이 객체를 이용해서 페이징 정보를 설정합니다.
+ * getParams 메서드는 페이지 관련 파라미터를 문자열로 반환합니다.
+ * getParamsExclPi 메서드는 페이지 인덱스를 제외한 페이지 관련 파라미터를 문자열로 반환합니다.
+ * getParamsOverride 메서드는 getParams와 getParamsExclPi 메서드에서 덧붙일 추가적인 파라미터를 반환합니다.
+ * 이 메서드는 기본적으로 빈 문자열을 반환하지만, 필요에 따라서 오버라이드할 수 있습니다.
+ */
+
+/*
+ * CmmUseService.java 파일 요약
+ * CmmUseService 인터페이스는 일반적인 서비스 기능을 제공합니다.
+ * selectCmmnDetailCodeMap, selectCmmnDetailCodeListToMap 메서드들은 공통 상세 코드 맵을
+ * 선택하거나 생성하는 기능을 제공합니다.
+ * redirectMsg, backMsg, popupRedirectMsg, popupCloseMsg, redirect, responseMsg,
+ * popupOpenerRefresh
+ * 메서드들은 페이지 이동이나 메세지 전달 등의 기능을 제공합니다.
+ * removeCmmnDetailCodeList 메서드는 주어진 리스트에서 특정 코드를 제거하는 기능을 제공합니다.
+ */
+
+/*
+ * FileMngUtil.java 파일 요약
+ * getStandardPath, getNewFileName, getFileExt 메서드들은 파일 경로를 표준화하거나 새 파일 이름을
+ * 생성하거나 파일 확장자를 가져오는 등의 문자열 처리 기능을 제공합니다.
+ * parseFileInf, parseFileInfMulti 메서드들은 MultipartFile 객체의 정보를 파싱하여 FileVO 객체를 생성하고 반환합니다.
+ * writeFile, mkdir, isExistsFile, getFileSize, isDirectory, realPath, copyFile,
+ * getFileContents, saveFile, deleteFile 메서드들은 파일을 쓰거나 디렉토리를 생성하거나 파일이 존재하는지
+ * 확인하거나 파일 크기를 가져오거나 디렉토리인지 확인하거나 실제 경로를 가져오거나 파일을 복사하거나 파일 내용을 가져오거나 파일을 저장하거나
+ * 파일을 삭제하는 등의 파일 및 디렉토리 관련 기능을 제공합니다.
+ */
+
+ /* FileVO.java 파일 요약 */
