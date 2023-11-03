@@ -105,6 +105,61 @@ URl에 대한 요청을 서버에 전송하게 된다.
 스프링 빈에만 AOP가 적용 가능하다.
 모든 AOP기능을 제공하는 것이 아닌 스프링 IOC와 연동하여 엔터프라이즈 애플리케이션에서 가장 흔한 문제에 대한 해결책을 지원하는 것이 목정
 (중복 코드 , 프록시 클래스 작성의 번거로우ㅜㅁ, 객체들 간 관계 복잡도 증가)-->
+<!-- AOP 용어
+-> Target : AOP 적용 대상 biz 로직
+-> Advice : AOP 기능 type & 실행 시점
+before : biz 실행 전
+after : biz 실행 후
+after-throwing : biz 예외처리 AOP
+after-returning : biz 리턴값 반환 후
+-> Join Point : 적용할 위치
+pointcut : advice가 적용될 지점
+execution() , within() 함수로 지점 호출  -->
+<!-- AOP : XML 기반 설정 -->
+<!-- 
+    <aop:aspectj-autoproxy /> : AOP 사용을 위한 필수 설정
+    biz와 common을 bean binding (필수)
+    <aop:config></aop:config> : AOP 설정 구간
+    <aop:aspect ref="common"></aop:aspect> : Advice 작성구간
+    ref : AOP bean 호출
+    <aop:ponitcut id="bizLogig" expression="..."/> : pointcut의 expression, 즉 advice가 적용될 지점을 id로 참조할 수 있게 생성
+    -> expression 작성방법
+    -- excution() : "execution(* step02.aop.biz.Car.buy*(..))"
+    Car.java에서 buy~() 라는 이름을 가짐 함수 모두에 적용
+    (..) : 모든 종류의 parameter일 때 사용되는 표현 (int)로 작성시 int 데이터타입의 parameter를 1개 받는 함수에만 적용
+    -- within() : "within(step02.aop.biz.Car)"
+    선택된 biz 객체에 대해 모두 적용
+    "within(step02.aop.biz.*)" 과 같은 방식으로 1개 이상에 bean 객체 선택 가능
+    -- execution() & within() 차이점 :
+    within() 의 최대 조회 깊이는 .java , biz 클래스 내부 메소드에 따라 구분이 불가능 함으로
+    구체적인 구분이 필요하다면 execution() 사용
+-->
+<!-- XML : before & after -->
+<!-- 
+    <aop:before method="beforeNotice" pointcut-ref="bizLogic"/> :
+    bizLogic pointcut 기준에 맞는 함수 실행 전에 beforeNotice() 함수호출
+    <aop:after method="afterNotice" pointcut-ref="bizLogic"/> :
+    bizLogic pointcut 기준에 맞는 함수 실행 전에 afterNotice() 함수호출
+-->
+<!-- XML : after-throwing -->
+<!-- 
+    biz 로직이 실행될 때 try / catch 문에서 던지는 Exception을 AOP 로직이 받는다.
+    AOP 로직에서 받는 Exception 변수명과 동일하게 작성
+    -> pointcut : 개별로 지정하고 싶을 때 바로 tag 안에 작성
+    -> pointcut-ref : 기존 <aop:pointcut/>을 참조하고 싶을 때 id 기준으로 binding
+-->
+<!-- XML : after-returning -->
+<!-- 
+    biz 로직이 return 하는 값을 AOP 로직이 parameter로 받음
+    AOP 로직에서 받는 parameter 변수명과 동일하게 작성
+    -> parameter의 Data-type은 Object로, 유동적인 반환을 가능하게 설계 권장
+-->
+<!-- XML : Around -->
+<!-- 
+    before, after, throwing, returning을 하나의 tag로 처리 가능
+    -> ProceedJoinPoint : Around Adivce에서 사용할 공통기능
+    메서드는 파라미터로 전달받은 ProceedingJointPoint의 proceed() 메소드로 실행
+ -->
 
 <!-- dispatcher-servlet -->
 <!-- JAVA Servlet은 자바를 사용하여 웹 페이지를 동적으로 생성하는 서버측 프로그램 혹은 그 사양을 말하며, 흔히 서블릿이라 불린다. 
