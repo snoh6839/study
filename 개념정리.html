@@ -521,3 +521,37 @@ x 방향으로 회전할 거리와 y 방향으로 회전할 거리입니다.
 (imageWidth - imageHeight) / 2를 사용하여 x 및 y 인수를 계산합니다.
 이미지를 시계 반대 방향으로 회전하려면 rotateImageClockWise()
 대신 rotate()에서 rotateImageCounterClockwise() 메서드를 호출할 수 있습니다. -->
+
+<!-- 스트림(Stream) -->
+<!-- 데이터가 출발지에서 도착지로 단일 방향으로 흘러가는 개념
+프로세스가 데이터의 도착지라면 입력 스트림 (InputStream)
+프로세스가 데이터의 출발지라면 출력 스트림 (OutputStream) 이라고 불린다.
+기준은 항상 프로그램이다. -->
+<!-- 스트림은 꼭 사용이 끝나면 close() 메소드로 스트림을 닫아 자원을 해제해야한다. 
+이는 try with resources 문법으로 간략하게 실행할수도 있다. -->
+<!-- 바이트 기반 스트림 -->
+<!-- InputStream의 주요 메서드
+read() : 일력 스트림으로 부터 1 바이트를 읽고 4 바이트 int 타입으로 리턴한다.
+따라서 int 타입의 4 바이트 중 마지막 1 바이트에만 데이터가 저장 된다.
+더이상 읽을 데이터가 없다면 -1을 리턴한다. 
+read(byte[] b) : 파라미터로 전달한 바이트 배열에 스트림으로부터 읽어드린 데이터를 저장한다.
+반환 값은 읽어들인 데이터의 바이트 수 이다.
+read(byte[] b, int off, int len) : 주어진 배열 b 의 인덱스 off부터 시작하여 len 개의 데이터를 저장한다.-->
+<!-- OutputStream의 주요 메서드
+write(int b) : 출력 스트림으로 단일 바이트를 출력한다.
+파라미터가 int인데 int는 4 바이트 이므로 마지막 1바이트만 전송된다. 
+write(byte[] b) : 파라미터로 전달된 바이트 배열을 출력 스트림으로 전송한다.
+write(byte[] b, int off, int len) : 주어진 바이트 배열에서 off 번째부터 len 개의 데이터를 전송한다. -->
+<!-- 문자 기반 스트림 -->
+<!-- 최상위 문자 기반 스트림 클래스, Reader와 Writer
+Reader 는 문자 기반 입력 스트림 최상위 추상 클래스이고, 
+Writer 는 문자 기반 출력 스트림 최상위 추상 클래스이다. -->
+<!-- Reader 주요 메소드
+read() :  입력 대상으로 부터 2바이트의 데이터를 읽고, 4바이트인 int 형으로 반환한다. 
+InputStream 처럼 더이상 읽을 데이터가 없다면 -1을 반환한다. 
+read(char[] cbuf) : 파라미터로 전달된 char 배열에 읽어온 데이터를 저장한다. -->
+<!-- Writer 주요 메소드
+write(int c) , write(char[] cbuf) , write(char[] c, int off, int len) 등이 있다. 
+앞서 설명한 여러 스트림 클래스의 사용법과 동일하므로 코드는 생략 
+write(String str), write(String str, int off, int len) : 편의를 위해 char 의 배열이 아니라
+String 타입도 전달할 수 있도록 설계되었다-->

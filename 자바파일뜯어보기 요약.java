@@ -681,6 +681,76 @@
  * 또한, toBufferedImage와 hasAlpha 메소드는 이미지 변환과 알파 채널 확인을 위해 사용됩니다.
  */
 
- /* ImageUtile.java 파일 요약
-  * 
-  */
+/*
+ * ImageUtile.java 파일 요약
+ * resize(File src, File dest, int width, int height):
+ * 소스 이미지 파일을 주어진 너비와 높이로 크기를 조정하고, 결과를 목적지 파일에 저장합니다.
+ * resize(InputStream src, File dest, int width, int height):
+ * 소스 이미지가 스트림으로 제공될 때 사용하는 resize 메서드입니다.
+ * getImageSize(String OpenFile):
+ * 주어진 파일 경로의 이미지 크기를 얻어 int 배열로 반환합니다.
+ * createThumb2(String OpenFile, String SaveFile, int Width, int Height, String
+ * Type):
+ * 주어진 파일 경로의 이미지를 썸네일로 생성합니다. 생성된 썸네일의 크기와 종류는 입력으로 제공됩니다.
+ * createThumb(String OpenFile, String SaveFile, int Width, int Height, String
+ * Type): createThumb2와 비슷하지만, 이 메서드는 PixelGrabber를 사용하여 썸네일을 생성합니다.
+ * createJaiThumb(String sourcePath, String thumbPath, float xScale, float
+ * yScale): Java Advanced Imaging(JAI)을 사용하여 이미지를 크기 조정하고 썸네일을 생성합니다.
+ * createMultiStepScaledImage(BufferedImage image, int targetSize): 이미지를 여러 단계를
+ * 거쳐서 크기를 조정합니다. 이 방법은 이미지의 품질을 보존하면서 크기를 줄이는 데 유용합니다.
+ * reSize_AUTO(int[] orgSize, int[] reSize), reSize_W(int[] orgSize, int[]
+ * reSize), reSize_H(int[] orgSize, int[] reSize): 각각 자동, 너비 고정, 높이 고정 방식으로 이미지
+ * 크기를 조정합니다.
+ */
+
+/*
+ * SessionUtil.java 파일 요약
+ * getSessionValue 메서드는 Http 세션에서 주어진 이름의 속성 값을 가져옵니다.
+ * 이 메서드는 세션에서 특정 데이터를 읽을 때 사용됩니다.
+ * setSessionValue 메서드는 Http 세션에 주어진 이름과 값의 속성을 설정합니다.
+ * 이 메서드는 세션에 특정 데이터를 저장할 때 사용됩니다.
+ * 이렇게 세션을 이용하면 사용자별로 데이터를 저장하고 관리할 수 있습니다.
+ */
+
+/*
+ * StringUtil.java 파일 요약
+ * 이 클래스의 메서드들은 주로 문자열을 처리하거나 변환하는데 사용됩니다.
+ * 특정 메서드들은 보안을 위해 스크립트 태그를 제거하거나, 특수 문자를 HTML 엔티티로 변환하거나,
+ * HTML 태그를 제거하는 등의 작업을 수행합니다.
+ * 또한 다른 메서드들은 문자열을 URL 인코딩/디코딩하거나, 문자열이 숫자인지 확인하거나,
+ * 문자열을 문자 배열로 변환하거나, 랜덤한 문자열을 생성하는 등의 작업을 수행합니다.
+ */
+
+/*
+ * CustomFieldCheck.java 파일 요약
+ * validateCheckBoxRequired 메서드는 체크박스가 체크되어 있는지 확인하는 유효성 검사를 수행합니다.
+ * 이 메서드는 주어진 객체(bean)에서 특정 필드(field)의 속성 값을 가져와 boolean 값으로 변환합니다.
+ * 만약 체크박스가 체크되어 있지 않으면 에러 메시지를 추가하고 false를 반환합니다.
+ * 체크박스가 체크되어 있으면 true를 반환합니다.
+ */
+
+/*
+ * CommonController.java 파일 요약
+ * 이 컨트롤러의 메서드들은 각각 다른 URL 요청에 대응하여 처리하며,
+ * 대부분의 메서드는 권한이 없을 때 보여주는 메시지와 이동할 페이지를 설정하거나 반환하는 역할을 합니다.
+ * 이 클래스는 웹 애플리케이션의 공통 기능을 담당하며,
+ * 특히 사용자의 권한에 따른 메시지를 처리하는 역할을 담당합니다.
+ */
+
+/*
+ * EgovBindinginitializer.java 파일 요약
+ * initBinder 메서드는 WebDataBinder 인스턴스를 초기화하는 작업을 수행합니다.
+ * 이 메서드에서는 Date 타입과 String 타입에 대한 사용자 정의 에디터를 등록합니다.
+ * CustomDateEditor는 문자열을 Date 타입으로 변환하는 에디터입니다.
+ * 이 에디터는 "yyyy-MM-dd" 형식의 날짜 문자열을 Date 타입으로 바인딩합니다.
+ * StringTrimmerEditor는 문자열의 앞뒤 공백을 제거하는 에디터입니다.
+ * 이 에디터는 사용자가 입력한 문자열의 앞뒤 공백을 제거한 후 해당 문자열을 바인딩합니다.
+ * 이 클래스는 사용자의 입력을 원하는 타입으로 바인딩하는데 필요한 설정을 제공합니다.
+ */
+
+/*
+ * ImageViewService.java 파일 요약
+ * renderMergedOutputModel 메서드는 뷰를 렌더링하는 역할을 수행합니다.
+ * 이 메서드에서는 모델로부터 파일의 전체 경로를 가져와 해당 파일의 내용을 읽어 HTTP 응답에 작성합니다.
+ * 만약 파일을 읽는 도중에 에러가 발생하면 404 에러를 응답합니다.
+ */
