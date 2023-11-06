@@ -721,3 +721,76 @@ rollback-for -n : 롤백을 일으키는 인젝션을 콤마로 구분한다.
 no-rollback-for -n : 롤백을 일으키지 않는 인젝션을 콤마로 구분한다.
 -->
 
+<!-- 아이비타스 (iBATIS) -->
+<!-- 아이바티스(iBATIS) 도입 이유
+ibatis 또는 Data Mapper 라고 한다.
+java에서 Object를 사용함에 있어서, getXXX, setXXX 로의 접근은
+사용법과 유지보수 측면에서 이미 standard 로 여겨지고 있다.
+ibatis는 상당한 코딩의 축소로 인해 개발자로 하여금 지겨운 노가다에서 해방하게 해준다.
+*spring app-servlet.xml 에 추가
+<bean id="ibatisdao" class="member.dao.MemberIbatisDaoImpl"/>
+*memberMapper.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd"> -->
+<!-- <sqlMap>
+MemberDTO 클래스를 풀네임으로 안하고 이러한 별칭으로 부르겠다라고 정의
+DB로부터 가져온 데이터를 저장할 객체를 지정하는 것을 의미
+<typeAlias alia="memberDTO" type="member.dto.MemberDTO"/>
+-->
+<!-- DB로부터 가져온 데이터를 클래스에 옮겨담기 위한 설정 Property는
+멤버변수를 의미하고 column은 테이블의 필드명을 의미
+컬럼명과 클래스의 멤버변수명이 동일하면 지정할 필요 없고 생략이 가능
+id는 식별자, class는 위에 typeAlias에서 지정한 alias명
+<resultMap id="memberResult" class="memberDTO">
+<result property="id" column="id" />
+<result property="password" column="password" />
+...
+</resultMap>
+-->
+<!-- DB에 전달할내용을 의미. DB연동하는 모든 작업에 대해서 이렇게 작성하면
+이것을 자바코드에서 불러서 쓸 수 있도록 객체를 생성하는 작업을별도로 해야한다.
+select 태그 안에 적은 sql문의 수행결과를 resultMap에 넘겨주겠다는 의미
+<select id="getMemberList" resultMap="memberResult">
+select * from member
+</select>
+</sqlMap>
+*SqlMapConfig.xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMapConfig>
+<transactionManager type="JDBC" commitRequired="false">
+<dataSource type="SIMPLE">
+<property name="JDBC.Driver" value="oracle.-
+<property name ="JDBC.ConnectionURL" -
+"JDBC.Username, Password -
+</dataSource>
+</transactionManager>
+-->
+<!-- 또다른 설정파일을 연결해서 사용할 수 있고 실제 일처리를 담당하도록 쿼리를
+담고 있는 설정파일의 경로를 지정한다.
+이는 스프링의 import와 비슷한 기능으로 resource의 패키지명을 . 이 아니라 / 로 표현한다.
+<sqlMap resource="member/ibatis/memberMapper.xml"/>
+-->
+<!-- List more here..
+<sqlMap resource="com/spring/data/Order.xml"/>
+<sqlMap resource="com/spring/data/Documents.xml"/>
+</sqlMapConfig>
+*클래스 파일 MemberIbatisManager.java
+public class MemberIbatisManager {
+//memberMapper.xml 파일에서 작업한 것을 자바코드로 연결시키기 위해서 사용하는객체
+private static SqlMapClients sqlMapper;
+//sqlMapConfig.xml 를 input하고 있고 이 객체를 통해서 memberMapper.xml 파일에 접근가능
+Reader reader = Resources.getResourceAsReader("member/ibatis/SqlMapConfig.xml");
+sqlMapper=SqlMapClientBuilder.buildSqlMapClient(reader);
+reader.close();
+----
+public static List getMemberList() {
+List list = null;
+list=sqlMapper.queryForList("getMemberList");
+return list;
+}
+}
+... try - catch 감싸는부분 생략
+-->
