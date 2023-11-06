@@ -685,4 +685,39 @@ key(object), value(object) 형태가 아니라 key(string), value(string) 형태
 <!-- 
     <set> 요소를 사용하여 값을 지정할 수 있습니다.
     value-type 특성에는 set에 허용되는 형식을 지정할 수 있습니다.
- -->
+-->
+
+<!-- 스프링 트랜잭션 관리 -->
+<!-- <tx:annotation-driven/> 속성 (디폴트)
+transaction-manager (transactionManager) : 사용할 트랜잭션 관리자 이름이다. 트랜잭션 관리자의 이름이 디폴트와
+다를 경우에만 필요하다.
+mode (proxy) : 기본 모드인 proxy가 Spring의 AOP 프레임 워크를 사용해서 프록시되는 어노테이션이 붙은 빈을 처리.
+Aspectj는 스프링의 AspectJ 트랜잭션 관점으로 영향 받은 클래스를 대신 위빙해서 모든 종류의 메서드 호출에 적용하기 위해
+대상 객체의 바이트 코드를 수정.
+proxy-target-class (false) : 트랜잭션 어노테이션이 붙은 클래스에 어떤 타입의 트랜잭션 프록시를 생성한 것인지 제어한다.
+true면 클래스 기반 프록시, false거나 설정을 안했다면, JDK 인터페이스 기반 프록시
+order (Ordered.LOWEST_PRECEDENCE) : 트랜잭션 어노테이션이 붙은 빈에 적용되는 트랜잭션 어드바이스 순서 정의
+-->
+<!-- <tx:method/> 속성(디폴트) -필수 여부
+point와 advice-ref 속성값을 가진 별개의 aop:advisor 요소를 정의할 수 있다.
+트랜잭션의 기본설정을 쉽게 통괄하게 변경할 수 있다.
+한 코드 내에 트랜잭션 설정 패키지와 클래스, 메소드를 알 수 있다.
+name -y : 연결된 트랜잭션 속성의 메소드 이름이다. 와일드카드(*)문자로 공통부분의 문자가 들어가는 메소드에 사용할 수 있다.
+propagation(REQUIRED) -n : 트랜잭션 전파 동작, 다른 트랜재견을 호출할 때 사용하는 속성
+-> (REQUILED) : 부모 트랜잭션 안에서 실행, 부모가 없을 경우 새로운 트랜잭션 생성
+-> (SUPPORTS) : 이미 실행된 트랜잭션이 있으면 참여, 없으면 트랜잭션 없이 진행
+-> (REQUIRES_NEW) : 부모 트랜잭션을 무시하고 무조건 새로운 트랜잭션이 생성
+-> (MANDATORY) : 이미 시작된 트랜잭션이 있으면 참여 없으면 시작하지 않고 예외를 던진다.
+-> (NOT_SUPPORTED) : 트랜잭션을 사용하지 않게한다. 이미 진행중인게 있으면 보류
+isolation(DEFAULT) -n : 트랜잭션 격리 수준
+-> (DEFAUL) : 기본 격리 수준 (기본 설정, DB의 isolation level을 따른다.)
+-> (READ_COMMITED) : 트랜잭션이 커밋이 확정된 데이터만 읽기를 허용
+-> (REPEATABLE_READ) : 트랜잭션이 완료될 때까지 SELECT 문장이 사용하는 모든 데이터에 shared lock이 걸리므로
+다른 사용자는 그 영역에 해당되는 데이터에 대한 수정이 불가능
+-> (SERLIABLE)  : 데이터의 일관성 및 동시성을 위해 MVCC(Multi Version Concurrency Control)을 사용하지 않는다.
+timeout(-1) -n : 트랜잭션 타임아웃 값 초단위다.
+read-only(false) -n : 트랜잭션 읽기 전용 여부
+rollback-for -n : 롤백을 일으키는 인젝션을 콤마로 구분한다.
+no-rollback-for -n : 롤백을 일으키지 않는 인젝션을 콤마로 구분한다.
+-->
+
