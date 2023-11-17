@@ -243,3 +243,727 @@ for (var i = 0; i < slides.length; i++) { var pager=document.createElement('butt
 				</div>
 			</div>
 -->
+
+
+<!-- 해결 해야할 문제점: 자동으로 작동되어야할 슬라이더가  var pager = document.createElement('button'); 이 버튼중 하나를 눌러야만 작동이 시작됨, 시작 되기 전까지 콘솔 창에 같은 오류가 반복해서 생김. 오류 메세지: slider.js:33 Uncaught TypeError: Cannot read properties of undefined (reading 'classList')
+    at slider.js:33:29 -->
+
+<!-- 현재 html 코드 -->
+<!-- 슬라이더 -->
+
+<div class="hero">
+    <div class="herocard">
+        <div class="title">
+            <p>대학풍경</p>
+            <div class="pagination" id="pagination1">
+
+            </div>
+        </div>
+        <div class="slider" id="slider1">
+            <c:forEach var="result" varStatus="idx" items="${photoInfoMain1List}">
+                <div>
+                    <img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}" />
+                    <span>${result.photoSj}</span>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+    <div class="herocard">
+        <div class="title">
+            <p>사진으로 보는 역사</p>
+            <div class="pagination" id="pagination2"></div>
+        </div>
+        <div class="slider" id="slider2">
+            <c:forEach var="result" varStatus="idx" items="${photoInfoMain2List}">
+                <div>
+                    <img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}" />
+                    <span>${result.photoSj}</span>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+
+<script src="./js/slider.js"></script>
+
+<!-- slider.js 코드
+
+
+function createSlider(sliderId, paginationId) {
+    var slider = document.getElementById(sliderId);
+    var slides = slider.getElementsByTagName('div');
+    var pagination = document.getElementById(paginationId);
+
+    for (var i = 0; i < slides.length; i++) {
+        var pager = document.createElement('button');
+        pagination.appendChild(pager);
+    }
+	
+		
+    var pagers = pagination.getElementsByTagName('button'); // var를 추가하여 pagers를 새로 선언
+	if (pagers[0]) {
+    pagers[0].classList.add('active');
+	}
+
+	// 슬라이더 자동 전환 시작
+    setInterval(function () {
+        var activeIndex;
+        for (var i = 0; i < slides.length; i++) {
+            if (slides[i].classList.contains('active')) {
+                slides[i].classList.remove('active');
+                pagers[i].classList.remove('active');
+                activeIndex = i;
+            }
+        }
+        activeIndex++;
+        if (activeIndex >= slides.length) {
+            activeIndex = 0;
+        }
+        slides[activeIndex].classList.add('active');
+        pagers[activeIndex].classList.add('active');
+    }, 2000);
+
+    
+
+    for (var i = 0; i < pagers.length; i++) {
+        pagers[i].addEventListener('click', function () {
+            var pagerIndex = Array.prototype.indexOf.call(pagers, this);
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+                pagers[i].classList.remove('active');
+            }
+            slides[pagerIndex].classList.add('active');
+            this.classList.add('active');
+        });
+    }
+}
+
+
+createSlider('slider1', 'pagination1');
+createSlider('slider2', 'pagination2');
+
+-->
+
+<!-- 콘솔창 element -->
+<div class="hero">
+    <div class="herocard">
+        <div class="title">
+            <p>대학풍경</p>
+            <div class="pagination" id="pagination1"><button class=""></button><button class="active"></button><button
+                    class=""></button></div>
+        </div>
+        <div class="slider" id="slider1">
+
+            <div class="">
+                <img src="/photoImageView/thumb/54785.do" alt="신과학관 주변(故 손진호 교수 촬영)">
+                <span>신과학관 주변(故 손진호 교수 촬영)</span>
+            </div>
+
+            <div class="active">
+                <img src="/photoImageView/thumb/54711.do" alt="도서관, 본관  여름 전경(故 손진호 교수 촬영)">
+                <span>도서관, 본관 여름 전경(故 손진호 교수 촬영)</span>
+            </div>
+
+            <div class="">
+                <img src="/photoImageView/thumb/54432.do" alt="경북대학교 백양로 가을">
+                <span>경북대학교 백양로 가을</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="herocard">
+        <div class="title">
+            <p>사진으로 보는 역사</p>
+            <div class="pagination" id="pagination2"><button class=""></button><button class="active"></button><button
+                    class=""></button></div>
+        </div>
+        <div class="slider" id="slider2">
+
+            <div class="">
+                <img src="/photoImageView/thumb/42987.do" alt="스페인 바르셀로나 자치대학 총장">
+                <span>스페인 바르셀로나 자치대학 총장</span>
+            </div>
+
+            <div class="active">
+                <img src="/photoImageView/thumb/42997.do" alt="임인배 한국전기안전공사 사장 내방">
+                <span>임인배 한국전기안전공사 사장 내방</span>
+            </div>
+
+            <div class="">
+                <img src="/photoImageView/thumb/26890.do" alt="사회과학의 위기와 경쟁력 제고(1998)">
+                <span>사회과학의 위기와 경쟁력 제고(1998)</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 문제점 : .herocard의 높이가 이미지 사이즈에따라 달라져서 결과적으로 2개가 존재하는 이 .hero카드의 높이가 서로 달라짐, 
+    그로인해 .notice와의 높이를 조정해 놓은 것도 맞지 않게 됨
+/* 섹션 2 */
+
+.section02 {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-between;
+margin-top: 5rem;
+align-items: center;
+}
+
+.notice {
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+/* border: 1px solid var(--red); */
+width: 36vw;
+}
+
+.noticeT {
+display: flex;
+align-items: end;
+justify-content: space-between;
+border-bottom: 2px solid var(--red);
+padding-bottom: 1rem;
+}
+
+.noticeT > h2 {
+margin-top: 0;
+}
+
+.redArrow {
+color: var(--red);
+font-weight: bold;
+}
+
+.notice > ul > li {
+display: flex;
+justify-content: space-between;
+margin: .6rem 0 ;
+border-bottom: 2px solid var(--gray);
+padding: .6rem 0;
+font-size: 1.2rem;
+}
+
+.notice>ul>li > p {
+display: flex;
+align-items: center;
+}
+
+.circle {
+width: 1rem;
+height: 1rem;
+background-color: var(--red);
+border-radius: 50%;
+margin-right: .6rem;
+}
+
+.grayText {
+color: var(--gray-light);
+}
+
+/* 슬라이더 */
+
+.hero {
+width: 52vw;
+height: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 1rem;
+}
+
+.hero .herocard {
+
+border: 2px solid var(--red);
+border-radius: 3%;
+position: relative;
+width: 26vw;
+height: 100%;
+box-sizing: border-box;
+display: grid;
+/* vertical-align: middle; */
+grid-template-areas:
+"title slider slider slider"
+
+"title slider slider slider";
+grid-template-columns: 1fr 3fr;
+
+padding: 1rem;
+
+}
+
+.hero .herocard .title {
+grid-area: title;
+display: flex;
+height: 100%;
+flex-direction: column;
+justify-content: space-between;
+align-items: stretch;
+
+}
+
+.hero .herocard .title p {
+font-size: 1.4rem;
+margin-right: .8rem;
+}
+
+.hero .herocard .slider {
+grid-area: slider;
+height: 100%;
+overflow: hidden;
+}
+
+.hero .herocard .slider div {
+display: none;
+/* height: 80%; */
+}
+
+.hero .herocard .slider div img {
+height: 100%;
+width: 100%;
+}
+
+.hero .herocard .slider div.active {
+display: flex;
+flex-direction: column;
+align-items: start;
+justify-content: center;
+}
+
+.hero .herocard .pagination {
+grid-area: pagination;
+display: flex;
+justify-content: center;
+padding: 10px 0;
+}
+
+.hero .herocard .pagination button {
+width: 10px;
+height: 10px;
+border: none;
+/* border-radius: 50%; */
+background: #e56d74;
+margin: 0 2px;
+cursor: pointer;
+transition: all 0.5s ease;
+}
+
+.hero .herocard .pagination button.active {
+background: #d40c18;
+}
+-->
+
+
+<!-- 만약 
+카테고리로 이동을 
+<a href="/www/selectPhotoInfoWebList.do?ctgryNo=2&key=838"><span>행사</span></a>
+이런 식으로 하고 있다면
+<c:forEach var="result" varStatus="idx" items="${photoInfoLatestList}">
+    <div class="cont">
+        <a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12"
+            class="photo"><img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}" /></a>
+        <a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12"
+            class="tit">${result.photoSj}</a>
+        <div class="date">${tsu:toDateFormat(result.photoPotogrfDe,'yyyyMMdd','yyyy.MM.dd')}</div>
+이런 방식으로 해당 카테고리의 가장 최신 사진 한장을 들고와서
+<div class="smallPhoto sec1img2"> <img src="./img/sec1img2.png" alt="2"> <span class="content">행사</span> </div>
+여기의 img를 대체할 수 있을까
+
+-->
+
+<!-- 조건 1. 카테고리 지정, 조건 2. 최신 이미지일것
+그냥 최신 이미지 4장 들고오는 코드: 
+<c:forEach var="result" varStatus="idx" items="${photoInfoLatestList}" >
+    <div class="card">
+        <div class="cardImg"  style="cursor:pointer;" onclick="location.href='./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12'">
+            <img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}">
+
+            해당 카테고리로 넘어가는 링크
+            onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=838'"
+            해당 카테고리는 키값으로 찾아가고 있음, 카테고리 넘버는 변경해도 고장안남
+-->
+
+
+<!-- 
+아래 3가지 조건을 순서대로 수행하여 설명
+    조건 1 해당 쿼리를 한번 싸서 카테고리 넘버로 해당 카테고리의 가장 최신 사진을 뽑아 올 수 있게 만들기
+SELECT 
+			PD.PHOTO_SIZE_WIDTH, PD.PHOTO_SIZE_HEIGHT, PI.CONTEST_PHOTO_AT, PI.CONTEST_ACCEPT_NM, PI.PHOTO_INFO_NO, PI.CTGRY_NO, PI.PHOTO_SJ, PI.PHOTO_DC, PI.PHOTO_POTOGRF_DE, PI.PHOTO_TWITTER_SHARE_AT, PI.PHOTO_FACEBOOK_SHARE_AT, PHOTO_CACAO_SHARE_AT, PD.PHOTO_NO, 
+			P.CNT AS CNT, IFNULL(M.MENU_NO, 162) AS MENU_NO 
+		FROM (
+			SELECT * FROM TN_PHOTO_INFO
+		) AS PI
+		LEFT JOIN ( SELECT PHOTO_NO, PHOTO_INFO_NO, PHOTO_SIZE_WIDTH, PHOTO_SIZE_HEIGHT FROM TN_PHOTO WHERE REPRSNT_PHOTO_AT = 'Y' ) AS PD ON PI.PHOTO_INFO_NO = PD.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT 
+				PHOTO_INFO_NO, COUNT(*) CNT
+			FROM TN_PHOTO 
+			GROUP BY PHOTO_INFO_NO
+		) AS P ON PI.PHOTO_INFO_NO = P.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT CTGRY_NO, MIN(MENU_NO) AS MENU_NO FROM TN_MENU WHERE MENU_TY = 'MNTY07' AND CTGRY_NO IS NOT NULL GROUP BY CTGRY_NO
+		) AS M ON PI.CTGRY_NO = M.CTGRY_NO
+		LEFT JOIN (
+			SELECT 
+				CTGRY_NO, CTGRY_SORT_CODE, CASE WHEN C.C1_AT = 'Y' AND C.C2_AT = 'Y' AND C.C3_AT = 'Y' AND C.C4_AT = 'Y' AND C.C5_AT = 'Y' AND C.C6_AT = 'Y' AND C.C7_AT = 'Y' THEN 'Y' ELSE 'N' END AS CTGRY_OTHBC_AT
+			FROM (
+				SELECT
+					C1.CTGRY_NO, C1.CTGRY_SORT_CODE, C1.CTGRY_OTHBC_AT AS C1_AT,
+					CASE WHEN C2.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C2.CTGRY_OTHBC_AT END AS C2_AT,
+					CASE WHEN C3.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C3.CTGRY_OTHBC_AT END AS C3_AT,
+					CASE WHEN C4.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C4.CTGRY_OTHBC_AT END AS C4_AT,
+					CASE WHEN C5.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C5.CTGRY_OTHBC_AT END AS C5_AT,
+					CASE WHEN C6.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C6.CTGRY_OTHBC_AT END AS C6_AT,
+					CASE WHEN C7.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C7.CTGRY_OTHBC_AT END AS C7_AT
+				FROM TN_CTGRY AS C1
+				LEFT JOIN TN_CTGRY AS C2 ON C1.UPPER_CTGRY_NO = C2.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C3 ON C2.UPPER_CTGRY_NO = C3.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C4 ON C3.UPPER_CTGRY_NO = C4.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C5 ON C4.UPPER_CTGRY_NO = C5.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C6 ON C5.UPPER_CTGRY_NO = C6.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C7 ON C6.UPPER_CTGRY_NO = C7.CTGRY_NO   
+			) AS C
+		) AS C ON PI.CTGRY_NO = C.CTGRY_NO
+		WHERE
+			( 
+				PI.PHOTO_OTHBC_AT='Y' 
+				OR 
+				( 
+					PI.PHOTO_OTHBC_AT='R' 
+					AND 
+					PI.PHOTO_OTHBC_BGNDE  <=  DATE_FORMAT(SYSDATE(),'%Y%m%d') 
+					AND 
+					DATE_FORMAT(SYSDATE(),'%Y%m%d')  <=  PI.PHOTO_OTHBC_ENDDE 
+				) 
+			) AND C.CTGRY_OTHBC_AT='Y'
+			and C.CTGRY_SORT_CODE like CONCAT('0','%')
+				ORDER BY PI.PHOTO_INFO_NO DESC
+				LIMIT 1;
+
+조건 2 아래 형식으로 sql map 작성하기
+<select id="photoInfoDAO.selectPhotoInfoListByCategoryNo" parameterClass="photoInfo" resultMap="photoInfoMap">
+    	SELECT * FROM TN_PHOTO_INFO WHERE CTGRY_NO = #ctgryNo#
+    </select>
+
+조건 3 해당 html 의 이미지를 카테고리에 맞는 최신 이미지로 불러오기
+<div class="bigPhoto sec1img1" style="cursor:pointer;"
+    onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=1&key=839'">
+    <img src="./img/sec1img1.png" alt="1">
+    <span class="content">건물</span>
+</div>
+            -->
+
+
+<!-- 해당 sql 맵을 
+
+    	<select id="photoInfoDAO.selectLastPhotoByCategoryNo" parameterType="map" resultMap="photoInfoMap">
+		SELECT 
+			PD.PHOTO_SIZE_WIDTH, PD.PHOTO_SIZE_HEIGHT, PI.CONTEST_PHOTO_AT, PI.CONTEST_ACCEPT_NM, PI.PHOTO_INFO_NO, PI.CTGRY_NO, PI.PHOTO_SJ, PI.PHOTO_DC, PI.PHOTO_POTOGRF_DE, PI.PHOTO_TWITTER_SHARE_AT, PI.PHOTO_FACEBOOK_SHARE_AT, PHOTO_CACAO_SHARE_AT, PD.PHOTO_NO, 
+			P.CNT AS CNT, IFNULL(M.MENU_NO, 162) AS MENU_NO 
+		FROM (
+			SELECT * FROM TN_PHOTO_INFO
+		) AS PI
+		LEFT JOIN ( SELECT PHOTO_NO, PHOTO_INFO_NO, PHOTO_SIZE_WIDTH, PHOTO_SIZE_HEIGHT FROM TN_PHOTO WHERE REPRSNT_PHOTO_AT = 'Y' ) AS PD ON PI.PHOTO_INFO_NO = PD.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT 
+				PHOTO_INFO_NO, COUNT(*) CNT
+			FROM TN_PHOTO 
+			GROUP BY PHOTO_INFO_NO
+		) AS P ON PI.PHOTO_INFO_NO = P.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT CTGRY_NO, MIN(MENU_NO) AS MENU_NO FROM TN_MENU WHERE MENU_TY = 'MNTY07' AND CTGRY_NO IS NOT NULL GROUP BY CTGRY_NO
+		) AS M ON PI.CTGRY_NO = M.CTGRY_NO
+		LEFT JOIN (
+			SELECT 
+				CTGRY_NO, CTGRY_SORT_CODE, CASE WHEN C.C1_AT = 'Y' AND C.C2_AT = 'Y' AND C.C3_AT = 'Y' AND C.C4_AT = 'Y' AND C.C5_AT = 'Y' AND C.C6_AT = 'Y' AND C.C7_AT = 'Y' THEN 'Y' ELSE 'N' END AS CTGRY_OTHBC_AT
+			FROM (
+				SELECT
+					C1.CTGRY_NO, C1.CTGRY_SORT_CODE, C1.CTGRY_OTHBC_AT AS C1_AT,
+					CASE WHEN C2.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C2.CTGRY_OTHBC_AT END AS C2_AT,
+					CASE WHEN C3.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C3.CTGRY_OTHBC_AT END AS C3_AT,
+					CASE WHEN C4.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C4.CTGRY_OTHBC_AT END AS C4_AT,
+					CASE WHEN C5.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C5.CTGRY_OTHBC_AT END AS C5_AT,
+					CASE WHEN C6.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C6.CTGRY_OTHBC_AT END AS C6_AT,
+					CASE WHEN C7.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C7.CTGRY_OTHBC_AT END AS C7_AT
+				FROM TN_CTGRY AS C1
+				LEFT JOIN TN_CTGRY AS C2 ON C1.UPPER_CTGRY_NO = C2.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C3 ON C2.UPPER_CTGRY_NO = C3.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C4 ON C3.UPPER_CTGRY_NO = C4.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C5 ON C4.UPPER_CTGRY_NO = C5.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C6 ON C5.UPPER_CTGRY_NO = C6.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C7 ON C6.UPPER_CTGRY_NO = C7.CTGRY_NO   
+			) AS C
+		) AS C ON PI.CTGRY_NO = C.CTGRY_NO
+		WHERE
+			( 
+				PI.PHOTO_OTHBC_AT='Y' 
+				OR 
+				( 
+					PI.PHOTO_OTHBC_AT='R' 
+					AND 
+					PI.PHOTO_OTHBC_BGNDE  <=  DATE_FORMAT(SYSDATE(),'%Y%m%d') 
+					AND 
+					DATE_FORMAT(SYSDATE(),'%Y%m%d')  <=  PI.PHOTO_OTHBC_ENDDE 
+				) 
+			) AND C.CTGRY_OTHBC_AT='Y'
+			and PI.CTGRY_NO = #ctgryNo#
+				ORDER BY PI.PHOTO_INFO_NO DESC
+				LIMIT 1;
+	</select>
+
+해당 컨트롤러에 넣어
+package kr.co.dstinfo.DSPhoto.cop.photo.info.web;
+
+import java.util.List;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import kr.co.dstinfo.DSCMS.cmm.service.CmmUseService;
+import kr.co.dstinfo.DSCMS.cmm.stereotype.Interceptor;
+import kr.co.dstinfo.DSCMS.cmm.util.StringUtil;
+import kr.co.dstinfo.DSCMS.tag.pagination.NeoPaginationInfo;
+import kr.co.dstinfo.DSPhoto.cop.lic.service.CopyrightLicense;
+import kr.co.dstinfo.DSPhoto.cop.lic.service.CopyrightLicenseService;
+import kr.co.dstinfo.DSPhoto.cop.photo.ctg.service.Category;
+import kr.co.dstinfo.DSPhoto.cop.photo.ctg.service.CategoryService;
+import kr.co.dstinfo.DSPhoto.cop.photo.info.service.PhotoInfo;
+import kr.co.dstinfo.DSPhoto.cop.photo.info.service.PhotoInfoService;
+import kr.co.dstinfo.DSPhoto.cop.photo.service.Photo;
+import kr.co.dstinfo.DSPhoto.cop.photo.service.PhotoService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class PhotoInfoWebController
+{
+
+@Resource(name="categoryService")
+private CategoryService categoryService;
+
+@Resource(name="photoInfoService")
+private PhotoInfoService photoInfoService;
+
+@Resource(name="photoService")
+private PhotoService photoService;
+
+@Resource(name="cmmUseService")
+private CmmUseService cmmUseService;
+
+@Resource(name="copyrightLicenseService")
+private CopyrightLicenseService copyrightLicenseService;
+
+@Interceptor({"templateBinding"})
+@RequestMapping({"/{siteId}/selectPhotoInfoWebList.do"})
+public String selectPhotoInfoWebList(@PathVariable("siteId") String siteId, @RequestParam("key") int key,
+@ModelAttribute("photoInfo") PhotoInfo photoInfo, @RequestParam("ctgryNo") int ctgryNo, ModelMap model)
+throws Exception
+{
+Category category = this.categoryService.selectCategory(ctgryNo);
+
+photoInfo.setCtgrySortCode(category.getCtgrySortCode());
+
+if (10 == photoInfo.getPageUnit()) photoInfo.setPageUnit(12);
+
+int totCnt = this.photoInfoService.selectPhotoInfoWebListTotCnt(photoInfo);
+
+NeoPaginationInfo neoPaginationInfo = photoInfo.getNeoPaginationInfo(totCnt);
+
+/* 63 */ model.addAttribute("paginationInfo", neoPaginationInfo);
+
+List photoInfoList = this.photoInfoService.selectPhotoInfoWebList(photoInfo);
+model.addAttribute("photoInfoList", photoInfoList);
+
+int photoCnt = this.photoService.selectPhotoCntByCtgry(photoInfo.getCtgrySortCode());
+
+model.addAttribute("photoCnt", Integer.valueOf(photoCnt));
+
+return "DSPhoto/cop/photo/info/photoInfoWebList";
+}
+
+@Interceptor({"templateBinding"})
+@RequestMapping({"/{siteId}/selectPhotoInfoWebView.do"})
+public String selectPhotoInfoView(@PathVariable("siteId") String siteId, @RequestParam("key") int key,
+@ModelAttribute("photoInfo") PhotoInfo photoInfo, @RequestParam("ctgryNo") int ctgryNo, @RequestParam(value="photoNo",
+required=false, defaultValue="0") int photoNo, HttpServletRequest request, ModelMap model)
+throws Exception
+{
+String validate = this.photoService.validateOthbcPhotoInfo(photoInfo.getPhotoInfoNo(), false);
+if (!StringUtil.isEmpty(validate)) {
+return this.cmmUseService.backMsg(model, validate);
+}
+
+PhotoInfo photoInfoView = this.photoInfoService.selectPhotoInfo(photoInfo);
+model.addAttribute("photoInfoView", photoInfoView);
+
+Category category = this.categoryService.selectCategory(photoInfoView.getCtgryNo().intValue());
+model.addAttribute("category", category);
+
+
+
+if (StringUtil.isEmpty(Integer.valueOf(photoNo), true))
+{
+Photo photo = this.photoService.selectPhotoByDefault(photoInfo.getPhotoInfoNo());
+model.addAttribute("photo", photo);
+}
+else {
+Photo photo = this.photoService.selectPhoto(photoNo);
+model.addAttribute("photo", photo);
+}
+
+List photoList = this.photoService.selectPhotoList(photoInfo.getPhotoInfoNo());
+model.addAttribute("photoList", photoList);
+
+this.photoInfoService.updatePhotoInfoRdcnt(request, photoInfo);
+
+CopyrightLicense copyrightLicense = this.copyrightLicenseService.selectCopyrightLicense(1);
+model.addAttribute("copyrightLicense", copyrightLicense);
+
+return "DSPhoto/cop/photo/info/photoInfoWebView";
+}
+}
+
+/* Location: C:\eclipse-workspace-web\public_html_160907\public_html\kiost_photo\WEB-INF\classes\
+* kr.co.dstinfo.DSPhoto.cop.photo.info.web.PhotoInfoWebController
+*
+*/
+
+해당 html 이미지에 각 카테고리와 키값에 맞게 뽑기
+
+<div class="photoContainer">
+    <div class="bigPhoto sec1img1" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=1&key=839'">
+        <img src="./img/sec1img1.png" alt="1">
+        <span class="content">건물</span>
+    </div>
+    <div class="smallPhoto sec1img2" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=838'">
+        <img src="./img/sec1img2.png" alt="2">
+        <span class="content">행사</span>
+    </div>
+    <div class="smallPhoto sec1img3">
+        <img src="./img/sec1img3.png" alt="3">
+        <span class="content">조형물</span>
+    </div>
+    <div class="smallPhoto sec1img4" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=3&key=840'">
+        <img src="./img/sec1img4.png" alt="4">
+        <span class="content">풍경</span>
+    </div>
+    <div class="smallPhoto sec1img5" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=4&key=841'">
+        <img src="./img/sec1img5.png" alt="5">
+        <span class="content">기타</span>
+    </div>
+</div>
+
+
+-->
+
+
+
+
+
+
+
+
+<!-- 내가 뭔가 이해를 잘못한 모양인데
+    그저 각각 카테고리에 맞는 최신 사진을 가져오고 싶었을 뿐인데
+    왜 안되는 걸까
+
+    public int selectLastPhotoByCategoryNo(int ctgryNo) throws Exception {
+        return photoInfoDAO.selectLastPhotoByCategoryNo(ctgryNo);
+    }
+
+     public abstract int selectLastPhotoByCategoryNo(int ctgryNo)
+	  throws Exception;
+
+      <select id="photoInfoDAO.selectLastPhotoByCategoryNo" parameterType="map" resultMap="photoInfoMap">
+		SELECT 
+			PD.PHOTO_SIZE_WIDTH, PD.PHOTO_SIZE_HEIGHT, PI.CONTEST_PHOTO_AT, PI.CONTEST_ACCEPT_NM, PI.PHOTO_INFO_NO, PI.CTGRY_NO, PI.PHOTO_SJ, PI.PHOTO_DC, PI.PHOTO_POTOGRF_DE, PI.PHOTO_TWITTER_SHARE_AT, PI.PHOTO_FACEBOOK_SHARE_AT, PHOTO_CACAO_SHARE_AT, PD.PHOTO_NO, 
+			P.CNT AS CNT, IFNULL(M.MENU_NO, 162) AS MENU_NO 
+		FROM (
+			SELECT * FROM TN_PHOTO_INFO
+		) AS PI
+		LEFT JOIN ( SELECT PHOTO_NO, PHOTO_INFO_NO, PHOTO_SIZE_WIDTH, PHOTO_SIZE_HEIGHT FROM TN_PHOTO WHERE REPRSNT_PHOTO_AT = 'Y' ) AS PD ON PI.PHOTO_INFO_NO = PD.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT 
+				PHOTO_INFO_NO, COUNT(*) CNT
+			FROM TN_PHOTO 
+			GROUP BY PHOTO_INFO_NO
+		) AS P ON PI.PHOTO_INFO_NO = P.PHOTO_INFO_NO
+		LEFT JOIN (
+			SELECT CTGRY_NO, MIN(MENU_NO) AS MENU_NO FROM TN_MENU WHERE MENU_TY = 'MNTY07' AND CTGRY_NO IS NOT NULL GROUP BY CTGRY_NO
+		) AS M ON PI.CTGRY_NO = M.CTGRY_NO
+		LEFT JOIN (
+			SELECT 
+				CTGRY_NO, CTGRY_SORT_CODE, CASE WHEN C.C1_AT = 'Y' AND C.C2_AT = 'Y' AND C.C3_AT = 'Y' AND C.C4_AT = 'Y' AND C.C5_AT = 'Y' AND C.C6_AT = 'Y' AND C.C7_AT = 'Y' THEN 'Y' ELSE 'N' END AS CTGRY_OTHBC_AT
+			FROM (
+				SELECT
+					C1.CTGRY_NO, C1.CTGRY_SORT_CODE, C1.CTGRY_OTHBC_AT AS C1_AT,
+					CASE WHEN C2.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C2.CTGRY_OTHBC_AT END AS C2_AT,
+					CASE WHEN C3.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C3.CTGRY_OTHBC_AT END AS C3_AT,
+					CASE WHEN C4.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C4.CTGRY_OTHBC_AT END AS C4_AT,
+					CASE WHEN C5.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C5.CTGRY_OTHBC_AT END AS C5_AT,
+					CASE WHEN C6.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C6.CTGRY_OTHBC_AT END AS C6_AT,
+					CASE WHEN C7.CTGRY_OTHBC_AT IS NULL THEN 'Y' ELSE C7.CTGRY_OTHBC_AT END AS C7_AT
+				FROM TN_CTGRY AS C1
+				LEFT JOIN TN_CTGRY AS C2 ON C1.UPPER_CTGRY_NO = C2.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C3 ON C2.UPPER_CTGRY_NO = C3.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C4 ON C3.UPPER_CTGRY_NO = C4.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C5 ON C4.UPPER_CTGRY_NO = C5.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C6 ON C5.UPPER_CTGRY_NO = C6.CTGRY_NO
+				LEFT JOIN TN_CTGRY AS C7 ON C6.UPPER_CTGRY_NO = C7.CTGRY_NO   
+			) AS C
+		) AS C ON PI.CTGRY_NO = C.CTGRY_NO
+		WHERE
+			( 
+				PI.PHOTO_OTHBC_AT='Y' 
+				OR 
+				( 
+					PI.PHOTO_OTHBC_AT='R' 
+					AND 
+					PI.PHOTO_OTHBC_BGNDE  <=  DATE_FORMAT(SYSDATE(),'%Y%m%d') 
+					AND 
+					DATE_FORMAT(SYSDATE(),'%Y%m%d')  <=  PI.PHOTO_OTHBC_ENDDE 
+				) 
+			) AND C.CTGRY_OTHBC_AT='Y'
+			and PI.CTGRY_NO = #ctgryNo#
+				ORDER BY PI.PHOTO_INFO_NO DESC
+				LIMIT 1;
+	</select>
+
+    lastPhotoInfo = this.photoInfoService.selectLastPhotoByCategoryNo(ctgryNo);
+    model.addAttribute("lastPhotoInfo", lastPhotoInfo);
+    
+    return "DSPhoto/cop/photo/info/photoInfoWebList";
+
+    <div class="bigPhoto sec1img1" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=839'">
+        <img src="/photoImageView/thumb/${lastPhotoInfo.photoInfoNo}.do" alt="1">
+        <span class="content">건물</span>
+    </div>
+    <div class="smallPhoto sec1img2" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=838'">
+        <img src="/photoImageView/thumb/${lastPhotoInfo.photoInfoNo}.do" alt="1">
+        <span class="content">행사</span>
+    </div>
+    <div class="smallPhoto sec1img3" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=842'">
+        <img src="/photoImageView/thumb/${lastPhotoInfo.photoInfoNo}.do" alt="1">
+        <span class="content">조형물</span>
+    </div>
+    <div class="smallPhoto sec1img4" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=2&key=$840'">
+        <img src="/photoImageView/thumb/${lastPhotoInfo.photoInfoNo}.do" alt="1">
+        <span class="content">풍경</span>
+    </div>
+    <div class="smallPhoto sec1img5" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=3&key=841'">
+        <img src="/photoImageView/thumb/${lastPhotoInfo.photoInfoNo}.do" alt="1">
+        <span class="content">기타</span>
+    </div>
+-->
