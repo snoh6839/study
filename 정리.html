@@ -1,0 +1,245 @@
+<!-- 해야할 일 : 기존 c:if로 받아오던 이미지를 images 배열에 적용하고 span안에 받아오던 사진 제목을 descriptions에 적용해 신규 슬라이더에 데이터 받아오기  -->
+
+<!-- 현재 슬라이더 html -->
+
+<div class="hero">
+    <div class="herocard">
+        <div class="title">
+            <p>대학풍경</p>
+            <div class="pagination" id="pagination1"></div>
+        </div>
+        <div class="slider" id="slider1"></div>
+    </div>
+    <div class="herocard">
+        <div class="title">
+            <p>사진으로 보는 역사</p>
+            <div class="pagination" id="pagination2"></div>
+        </div>
+        <div class="slider" id="slider2"></div>
+    </div>
+</div>
+<script src="./js/slider.js"></script>
+
+<!-- slider.js 내용
+var images1 = ['./img/swImg1.png', './img/swImg2.png', './img/swImg1.png', './img/swImg2.png', './img/swImg1.png'];
+var descriptions1 = ['신과학관 주변(故 손진호 교수 촬영)', '신과학관 앞(이순신 교수 촬영)', '도서관 앞(김유신 교수 촬영)', '도서관 앞(김유신 교수 촬영)', '도서관 앞(김유신 교수 촬영)'];
+
+var images2 = ['./img/swImg2.png', './img/swImg1.png', './img/swImg2.png', './img/swImg1.png', './img/swImg2.png'];
+var descriptions2 = ['도서관 앞(박철수 교수 촬영)', '학교 정문(김영삼 교수 촬영)', '학교 후문(노무현 교수 촬영)', '도서관 앞(김유신 교수 촬영)', '도서관 앞(김유신 교수 촬영)'];
+
+createSlider('slider1', 'pagination1', images1, descriptions1);
+createSlider('slider2', 'pagination2', images2, descriptions2);
+
+function createSlider(sliderId, paginationId, images, descriptions) {
+    var slider = document.getElementById(sliderId);
+    var pagination = document.getElementById(paginationId);
+
+    for (var i = 0; i < images.length; i++) {
+        var slide = document.createElement('div');
+        var img = document.createElement('img');
+        var span = document.createElement('span');
+
+        img.src = images[i];
+        span.textContent = descriptions[i];
+
+        slide.appendChild(img);
+        slide.appendChild(span);
+        slider.appendChild(slide);
+
+        var pager = document.createElement('button');
+        pagination.appendChild(pager);
+    }
+
+    var slides = slider.getElementsByTagName('div');
+    var pagers = pagination.getElementsByTagName('button');
+
+    slides[0].classList.add('active');
+    pagers[0].classList.add('active');
+
+    setInterval(function () {
+        var activeIndex;
+        for (var i = 0; i < slides.length; i++) {
+            if (slides[i].classList.contains('active')) {
+                slides[i].classList.remove('active');
+                pagers[i].classList.remove('active');
+                activeIndex = i;
+            }
+        }
+        activeIndex++;
+        if (activeIndex >= slides.length) { activeIndex = 0 }
+        slides[activeIndex].classList.add('active');
+        pagers[activeIndex].classList.add('active');
+    }, 2000);
+
+    for (var i = 0; i < pagers.length; i++) {
+        pagers[i].addEventListener('click', function () {
+            var pagerIndex = Array.prototype.indexOf.call(pagers, this);
+            for (var i = 0; i < slides.length; i++) {
+                slides[i].classList.remove('active');
+                pagers[i].classList.remove('active');
+            }
+            slides[pagerIndex].classList.add('active');
+            this.classList.add('active');
+        });
+    }
+}
+
+-->
+
+<!-- 기존 이미지 슬라이더
+<div class="video_group clearfix">
+            <div class="video_01 video">
+                <h2>대학풍경</h2>
+            	<div class="video_area">
+                	<ul class="video_list">
+						<c:forEach var="result" varStatus="idx" items="${photoInfoMain1List}" >
+						<li>
+							<a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12" class="photo"><img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}"/></a>
+							<span class="text"><a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12" class="tit">${result.photoSj}</a></span>
+							
+						</li>
+						</c:forEach>
+					</ul>
+                </div>
+                <div class="control">
+                	<a href="" class="control_left"><img src="images/main/slide_prev.png" alt="이전동영상" /></a>
+                    <a href="" class="control_right"><img src="images/main/slide_next.png" alt="다음동영상" /></a>
+                </div>
+                
+            </div>
+            <div class="video_02 video">
+                <h2>사진으로보는 역사</h2>
+            	<div class="video_area">
+                	<ul class="video_list">
+                	<c:forEach var="result" varStatus="idx" items="${photoInfoMain2List}" >
+						<li>
+							<a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12" class="photo"><img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}"/></a>
+							<span class="text"><a href="./selectPhotoInfoWebView.do?key=${result.menuNo}&amp;ctgryNo=${result.ctgryNo}&amp;photoInfoNo=${result.photoInfoNo}&amp;pageUnit=12" class="tit">${result.photoSj}</a></span>
+							
+						</li>
+						</c:forEach>
+					</ul>
+                </div>
+                <div class="control">
+                	<a href="" class="control_left"><img src="images/main/slide_prev.png" alt="이전동영상" /></a>
+                    <a href="" class="control_right"><img src="images/main/slide_next.png" alt="다음동영상" /></a>
+                </div>
+                
+            </div>
+        </div>
+-->
+
+
+
+<!-- 현재 콘솔창 오류 : slider.js:26 Uncaught TypeError: Cannot read properties of undefined (reading 'classList')
+    at slider.js:26:29 -->
+
+<!-- html 코드 -->
+<!-- 슬라이더 -->
+
+<div class="hero">
+    <div class="herocard">
+        <div class="title">
+            <p>대학풍경</p>
+            <div class="pagination" id="pagination1"></div>
+        </div>
+        <div class="slider" id="slider1">
+            <c:forEach var="result" varStatus="idx" items="${photoInfoMain1List}">
+                <div>
+                    <img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}" />
+                    <span>${result.photoSj}</span>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+    <div class="herocard">
+        <div class="title">
+            <p>사진으로 보는 역사</p>
+            <div class="pagination" id="pagination2"></div>
+        </div>
+        <div class="slider" id="slider2">
+            <c:forEach var="result" varStatus="idx" items="${photoInfoMain2List}">
+                <div>
+                    <img src="/photoImageView/thumb/${result.photoNo}.do" alt="${result.photoSj}" />
+                    <span>${result.photoSj}</span>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+</div>
+<script src="./js/slider.js"></script>
+<!-- slider.js 코드
+function createSlider(sliderId, paginationId) {
+var slider = document.getElementById(sliderId);
+var slides = slider.getElementsByTagName('div');
+var pagination = document.getElementById(paginationId);
+
+for (var i = 0; i < slides.length; i++) { var pager=document.createElement('button'); pagination.appendChild(pager); }
+    pagers=pagination.getElementsByTagName('button'); pagers[0].classList.add('active'); setInterval(function () { var
+    activeIndex; for (var i=0; i < slides.length; i++) { if (slides[i].classList.contains('active')) {
+    slides[i].classList.remove('active'); pagers[i].classList.remove('active'); activeIndex=i; } } activeIndex++; if
+    (activeIndex>= slides.length) { activeIndex = 0 }
+    slides[activeIndex].classList.add('active');
+    pagers[activeIndex].classList.add('active');
+    }, 2000);
+
+    for (var i = 0; i < pagers.length; i++) { pagers[i].addEventListener('click', function () { var
+        pagerIndex=Array.prototype.indexOf.call(pagers, this); for (var i=0; i < slides.length; i++) {
+        slides[i].classList.remove('active'); pagers[i].classList.remove('active'); }
+        slides[pagerIndex].classList.add('active'); this.classList.add('active'); }); } }
+        window.addEventListener('load', function() { createSlider('slider1', 'pagination1' );
+        createSlider('slider2', 'pagination2' ); });
+-->
+
+<!-- 콘솔창 출력 element
+<div class="hero">
+				<div class="herocard">
+					<div class="title">
+						<p>대학풍경</p>
+						<div class="pagination" id="pagination1"><button class="active"></button><button></button><button></button></div>
+					</div>
+					<div class="slider" id="slider1">
+						
+							<div>
+								<img src="/photoImageView/thumb/54785.do" alt="신과학관 주변(故 손진호 교수 촬영)">
+								<span>신과학관 주변(故 손진호 교수 촬영)</span>
+							</div>
+						
+							<div>
+								<img src="/photoImageView/thumb/54711.do" alt="도서관, 본관  여름 전경(故 손진호 교수 촬영)">
+								<span>도서관, 본관  여름 전경(故 손진호 교수 촬영)</span>
+							</div>
+						
+							<div>
+								<img src="/photoImageView/thumb/54432.do" alt="경북대학교 백양로 가을">
+								<span>경북대학교 백양로 가을</span>
+							</div>
+						
+					</div>
+				</div>
+				<div class="herocard">
+					<div class="title">
+						<p>사진으로 보는 역사</p>
+						<div class="pagination" id="pagination2"><button class="active"></button><button></button><button></button></div>
+					</div>
+					<div class="slider" id="slider2">
+						
+							<div>
+								<img src="/photoImageView/thumb/42987.do" alt="스페인 바르셀로나 자치대학 총장">
+								<span>스페인 바르셀로나 자치대학 총장</span>
+							</div>
+						
+							<div>
+								<img src="/photoImageView/thumb/42997.do" alt="임인배 한국전기안전공사 사장 내방">
+								<span>임인배 한국전기안전공사 사장 내방</span>
+							</div>
+						
+							<div>
+								<img src="/photoImageView/thumb/26890.do" alt="사회과학의 위기와 경쟁력 제고(1998)">
+								<span>사회과학의 위기와 경쟁력 제고(1998)</span>
+							</div>
+						
+					</div>
+				</div>
+			</div>
+-->
