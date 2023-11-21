@@ -967,3 +967,113 @@ return "DSPhoto/cop/photo/info/photoInfoWebView";
         <span class="content">기타</span>
     </div>
 -->
+
+
+<!-- 
+    SELECT CONCAT_WS('/' , tn_photo.PHOTO_STRE_PATH , tn_photo.PHOTO_FILE_NM)
+FROM tn_photo
+INNER JOIN tn_photo_info ON tn_photo.PHOTO_INFO_NO = tn_photo_info.PHOTO_INFO_NO
+WHERE tn_photo_info.CTGRY_NO = 2
+ORDER BY tn_photo.PHOTO_NO DESC
+LIMIT 1;
+
+
+정상적으로 이미지 들고오는것 확인 
+/media/data/PHOTO/2023/0811/2C30667A-A08C-D653-A0EF-5CEDEBFF52F4.jpg
+
+
+sqlMap에 넣어줌
+<sqlMap namespace="photoInfo">
+    <select id="photoInfoDAO.selectLastPhotoByCategoryNo" parameterClass="photoInfo" resultMap="String">
+        SELECT CONCAT_WS('/' , tn_photo.PHOTO_STRE_PATH , tn_photo.PHOTO_FILE_NM)
+        FROM tn_photo
+        INNER JOIN tn_photo_info ON tn_photo.PHOTO_INFO_NO = tn_photo_info.PHOTO_INFO_NO
+        WHERE tn_photo_info.CTGRY_NO = #ctgryNo#
+        ORDER BY tn_photo.PHOTO_NO DESC
+        LIMIT 1;
+    </select>
+</sqlMap>
+
+controller에도 넣어줌
+/* 추가: 20231117 */
+lastPhotoInfo = this.photoInfoService.selectLastPhotoByCategoryNo(ctgryNo);
+model.addAttribute("lastPhotoInfo", lastPhotoInfo);
+
+
+// 행사 카테고리의 최신 사진을 가져옴
+PhotoInfo lastPhotoInfoBuilding = this.photoInfoService.selectLastPhotoByCategoryNo(2); // 카테고리 넘버는 건물 카테고리의 번호로 설정
+model.addAttribute("lastPhotoInfoBuilding", lastPhotoInfoBuilding);
+
+// 건물 카테고리의 최신 사진을 가져옴
+PhotoInfo lastPhotoInfoEvent = this.photoInfoService.selectLastPhotoByCategoryNo(3); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+model.addAttribute("lastPhotoInfoEvent", lastPhotoInfoEvent);
+
+// 풍경 카테고리의 최신 사진을 가져옴
+PhotoInfo lastPhotoInfoScene = this.photoInfoService.selectLastPhotoByCategoryNo(4); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+model.addAttribute("lastPhotoInfoScene", lastPhotoInfoScene);
+
+// 기타 카테고리의 최신 사진을 가져옴
+PhotoInfo lastPhotoInfoElse = this.photoInfoService.selectLastPhotoByCategoryNo(5); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+model.addAttribute("lastPhotoInfoElse", lastPhotoInfoElse);
+
+jsp 에도 넣어줌
+<div class="bigPhoto sec1img1" style="cursor:pointer;"
+    onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=3&key=839'">
+    <img src="${lastPhotoInfoBuilding}" alt="건물">
+    <span class="content">건물</span>
+</div>
+
+결과 <img src="" alt="건물">
+
+왜지?
+
+ -->
+
+ <!-- 
+    1. sql.xml
+    <select id="photoInfoDAO.selectLastPhotoByCategoryNo" parameterClass="photoInfo" resultMap="Integer">
+		SELECT tn_photo.PHOTO_NO
+			FROM tn_photo
+				INNER JOIN tn_photo_info ON tn_photo.PHOTO_INFO_NO = tn_photo_info.PHOTO_INFO_NO
+			WHERE tn_photo_info.CTGRY_NO = #ctgryNo#
+			ORDER BY tn_photo.FRST_REGISTER_PNTTM DESC
+		LIMIT 1;
+	</select>
+    2. dao
+    public int selectLastPhotoByCategoryNo(PhotoInfo photoInfo) throws Exception {
+    return ((Integer)select("photoInfoDAO.selectLastPhotoByCategoryNo", photoInfo)).intValue();
+    }
+    3.controller
+    lastPhotoInfo = this.photoInfoService.selectLastPhotoByCategoryNo(ctgryNo);
+    model.addAttribute("lastPhotoInfo", lastPhotoInfo);
+    
+    
+    // 행사 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoBuilding = this.photoInfoService.selectLastPhotoByCategoryNo(2); // 카테고리 넘버는 건물 카테고리의 번호로 설정
+    model.addAttribute("lastPhotoInfoBuilding", lastPhotoInfoBuilding);
+    
+    // 건물 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoEvent = this.photoInfoService.selectLastPhotoByCategoryNo(3); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+    model.addAttribute("lastPhotoInfoEvent", lastPhotoInfoEvent);
+    
+    // 풍경 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoScene = this.photoInfoService.selectLastPhotoByCategoryNo(4); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+    model.addAttribute("lastPhotoInfoScene", lastPhotoInfoScene);
+    
+    // 기타 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoElse = this.photoInfoService.selectLastPhotoByCategoryNo(5); // 카테고리 넘버는 행사 카테고리의 번호로 설정
+    model.addAttribute("lastPhotoInfoElse", lastPhotoInfoElse);
+
+    4. jsp
+    <div class="bigPhoto sec1img1" style="cursor:pointer;"
+        onclick="location.href='/www/selectPhotoInfoWebList.do?ctgryNo=3&key=839'">
+        <img src="/photoImageView/thumb/${lastPhotoInfoBuilding}.do" alt="건물">
+        <span class="content">건물</span>
+    </div>
+
+    5. @RequestMapping(value={"/photoImageView/{imageType}/{photoNo}.do"},
+    method={org.springframework.web.bind.annotation.RequestMethod.GET})
+
+    6. 결과
+    <img src="/photoImageView/thumb/.do" alt="건물">
+  -->
