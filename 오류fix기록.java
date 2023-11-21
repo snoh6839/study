@@ -79,5 +79,11 @@ Globals.Password=qwe123!!
  * 
  * 시도 1. 안될건 알지만 혹시 모르니 Globals.Url.mysql=jdbc:mysql://192.168.0.38:3306/neophoto
  * 이렇게 소문자로 바꿔 봄
+ * => Table 'neophoto.TN_COPYRIGHT_LICENSE' doesn't exist]을(를) 발생시켰습니다.
+ * 당연하다는 듯이 엄청나게 많은 오류를 뱉어냄.. 애초에 이거에 맞춰진 db가 아니니까.
+ * 물론 TN_COPYRIGHT_LICENS 테이블은 존재함. 얘도 소문자이긴 한데..?
+ * 
+ * 아니 원본이 소문자니까 이거 문제가 아닌거 같음...
+ * 
  * 
 */
