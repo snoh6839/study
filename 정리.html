@@ -1077,3 +1077,121 @@ jsp 에도 넣어줌
     6. 결과
     <img src="/photoImageView/thumb/.do" alt="건물">
   -->
+
+
+
+  <!-- 
+    아래 sql문 개선 필요 = 쿼리 컨트롤러에 4번 불러오지 말고 한번만 불러오기
+
+    1. mysql.xml
+    <select id="photoInfoDAO.selectLastPhotoByCategoryNo" parameterClass="photoInfo" resultClass="Integer">
+		SELECT tn_photo.PHOTO_NO
+			FROM tn_photo
+				INNER JOIN tn_photo_info ON tn_photo.PHOTO_INFO_NO = tn_photo_info.PHOTO_INFO_NO
+			WHERE tn_photo_info.CTGRY_NO = #ctgryNo#
+			ORDER BY tn_photo.FRST_REGISTER_PNTTM DESC
+		LIMIT 1
+	</select>
+
+    2. DAO
+    public int selectLastPhotoByCategoryNo(PhotoInfo photoInfo)
+    {
+    return ((Integer)select("photoInfoDAO.selectLastPhotoByCategoryNo", photoInfo)).intValue();
+    }
+
+    3. service
+    public abstract int selectLastPhotoByCategoryNo(int ctgryNo)
+    throws Exception;
+
+    4. serviceimpl
+    public int selectLastPhotoByCategoryNo(int ctgryNo) throws Exception {
+    PhotoInfo photoInfo = new PhotoInfo();
+    photoInfo.setCtgryNo(Integer.valueOf(ctgryNo));
+    return this.photoInfoDAO.selectLastPhotoByCategoryNo(photoInfo);
+    }
+
+    5. controller
+    // 행사 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoBuilding = this.photoInfoService.selectLastPhotoByCategoryNo(681);
+    model.addAttribute("lastPhotoInfoBuilding", lastPhotoInfoBuilding);
+    
+    // 건물 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoEvent = this.photoInfoService.selectLastPhotoByCategoryNo(682);
+    model.addAttribute("lastPhotoInfoEvent", lastPhotoInfoEvent);
+    
+    // 풍경 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoSecene = this.photoInfoService.selectLastPhotoByCategoryNo(684);
+    model.addAttribute("lastPhotoInfoSecene", lastPhotoInfoSecene);
+    
+    // 기타 카테고리의 최신 사진을 가져옴
+    int lastPhotoInfoElse = this.photoInfoService.selectLastPhotoByCategoryNo(685);
+    model.addAttribute("lastPhotoInfoElse", lastPhotoInfoElse);
+
+    6. sql 구조
+    -- 테이블 데이터 neophoto.tn_photo:~1 rows (대략적) 내보내기
+    INSERT INTO `tn_photo` (`PHOTO_NO`, `PHOTO_INFO_NO`, `PHOTO_STRE_PATH`, `PHOTO_FILE_NM`, `PHOTO_STRE_FILE_NM`,
+    `PHOTO_FILE_SIZE`, `PHOTO_SIZE_WIDTH`, `PHOTO_SIZE_HEIGHT`, `PHOTO_GPS_ENNC`, `PHOTO_GPS_LA`, `PHOTO_GPS_LO`,
+    `PHOTO_EXIF_ENNC`, `FRST_REGISTER_PNTTM`, `FRST_REGISTER_ID`, `LAST_UPDUSR_PNTTM`, `LAST_UPDUSR_ID`, `REPRSNT_PHOTO_AT`)
+    VALUES
+    (24806, 4947, '/media/data/PHOTO/2005/0228', 'O02010400000000_050921164206.jpg',
+    'c5eb358d-0f32-4b00-b97a-018be9324a55.jpg', 0, -1, -1, 'N', NULL, NULL, 'N', '20160907113804', 'neo', NULL, NULL, 'Y'),
+    
+    -- 테이블 데이터 neophoto.tn_photo_info:~1rows (대략적) 내보내기
+    INSERT INTO `tn_photo_info` (`PHOTO_INFO_NO`, `CTGRY_NO`, `PHOTO_SJ`, `PHOTO_POTOGRFER`, `PHOTO_POTOGRF_PLACE`,
+    `PHOTO_POTOGRF_DE`, `PHOTO_DC`, `PHOTO_KWRD`, `PHOTO_OTHBC_AT`, `PHOTO_OTHBC_BGNDE`, `PHOTO_OTHBC_ENDDE`,
+    `PHOTO_TWITTER_SHARE_AT`, `PHOTO_FACEBOOK_SHARE_AT`, `FRST_REGISTER_PNTTM`, `FRST_REGISTER_ID`, `LAST_UPDUSR_PNTTM`,
+    `LAST_UPDUSR_ID`, `RDCNT`, `PHOTO_CACAO_SHARE_AT`, `CONTEST_PHOTO_AT`, `CONTEST_NO`, `CONTEST_RCEPT_NO`,
+    `CONTEST_RCEPT_PHOTO_NO`, `CONTEST_ACCEPT_NM`, `PHOTO_REGIST_REQUST_NO`, `FILM_PLACE`, `FILM_EXPO`, `PHOTO_NOTE`,
+    `PHOTO_PERSON`) VALUES
+    (4947, 680, '2005학년도 입학식', '홍보팀', NULL, '20050228', 'CD-01-01-200502-01', NULL, 'N', NULL, NULL, 'Y', 'Y',
+    '20160907113804', 'neo', NULL, NULL, 0, 'Y', 'N', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+
+    
+    ```sql
+    <select id="photoInfoDAO.selectLastPhotosByCategoryNos" parameterClass="List" resultClass="Map">
+        SELECT tn_photo_info.CTGRY_NO, tn_photo.PHOTO_NO
+        FROM tn_photo
+        INNER JOIN tn_photo_info ON tn_photo.PHOTO_INFO_NO = tn_photo_info.PHOTO_INFO_NO
+        WHERE tn_photo_info.CTGRY_NO IN
+        <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        GROUP BY tn_photo_info.CTGRY_NO
+        ORDER BY tn_photo.FRST_REGISTER_PNTTM DESC
+    </select>
+    ```
+    
+    DAO 부분
+    
+    ```java
+    public Map<Integer, Integer> selectLastPhotosByCategoryNos(List<Integer> ctgryNos)
+            {
+            return (Map<Integer, Integer>) select("photoInfoDAO.selectLastPhotosByCategoryNos", ctgryNos);
+                }
+                ```
+        서비스와 서비스 구현 부분
+        ```java
+        public interface PhotoInfoService {
+        Map<Integer, Integer> selectLastPhotosByCategoryNos(List<Integer> ctgryNos) throws Exception;
+                }
+
+                public class PhotoInfoServiceImpl implements PhotoInfoService {
+                public Map<Integer, Integer> selectLastPhotosByCategoryNos(List<Integer> ctgryNos) throws Exception
+                        {
+                        return this.photoInfoDAO.selectLastPhotosByCategoryNos(ctgryNos);
+                        }
+                        }
+                        ```
+        컨트롤러 
+
+        ```java
+        List<Integer> ctgryNos = Arrays.asList(681, 682, 684, 685);
+            Map<Integer, Integer> lastPhotos =
+                this.photoInfoService.selectLastPhotosByCategoryNos(ctgryNos);
+                model.addAttribute("lastPhotoInfoBuilding", lastPhotos.get(681));
+                model.addAttribute("lastPhotoInfoEvent", lastPhotos.get(682));
+                model.addAttribute("lastPhotoInfoSecene", lastPhotos.get(684));
+                model.addAttribute("lastPhotoInfoElse", lastPhotos.get(685));
+
+-->
