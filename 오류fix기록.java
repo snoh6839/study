@@ -57,5 +57,27 @@ mysql -u root -p neophoto <  photo.sql
 => enter password 단계에서 멈추는 걸로 보임
 
 결국 데이터 베이스를 확인하니 이미 들어가 있었음.. 이미 들어간 디비를 계속 괴롭히니 오류를 뱉어냈던것.
+아 근데 뭐가 유효했는지 모르겠네.. 더 좋은 방법도 알아냄 
+물리적 접근이 가능하게 계정 생성해주고 윈도우에서 접근해서 임포트 하는게 더 쉬울듯
+아직은 리눅스가 어렵다.
+ * 
+*/
+
+
+/*
+ * Globals.Url.mysql=jdbc:mysql://192.168.0.38:3306/NeoPhoto
+#Globals.Url.mysql=jdbc:mysql://127.0.0.1:3306/NeoPhoto
+
+Globals.UserName=root
+Globals.Password=qwe123!!
+ * 
+ * 
+ * DB 있는 것도 확인 했고
+ * globals.properties도 수정해 줬건만
+ * Unknown database 'NeoPhoto' 를 뱉는 너란 아이..
+ * 
+ * 
+ * 시도 1. 안될건 알지만 혹시 모르니 Globals.Url.mysql=jdbc:mysql://192.168.0.38:3306/neophoto
+ * 이렇게 소문자로 바꿔 봄
  * 
 */
